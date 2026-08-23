@@ -1,0 +1,372 @@
+@use "../abstract/variables.scss" as *;
+@use "../abstract/mixins.scss" as *;
+
+.sidebar {
+    @include size(16rem, 100%);
+    @include flex-container(column, flex-start, stretch, nowrap, 0);
+    background-color: $color-dark;
+    border-right: 0.0625rem solid $color-dark-border;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.2s ease;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+
+    &::-webkit-scrollbar {
+        width: 0.375rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 0.25rem;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    &__static-top {
+        @include flex-container(column, flex-start, stretch, nowrap, 0.5rem);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: $color-dark;
+        padding: 0.75rem 0.75rem 0.5rem 0.75rem;
+    }
+
+    &__header {
+        @include flex-container(row, space-between, center);
+        padding: 0.25rem 0.5rem;
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: 600;
+    }
+
+    &__actions {
+        @include flex-container(row, flex-end, center, nowrap, 0.5rem);
+    }
+
+    &__icon-btn {
+        @include size(1.75rem);
+        @include center();
+        border-radius: 0.375rem;
+        position: relative;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        &.toggle-btn {
+            .icon-app {
+                display: none;
+            }
+            .icon-sidebar {
+                display: block;
+            }
+        }
+    }
+
+    &__new-chat {
+        @include flex-container(row, flex-start, center, nowrap, 0.75rem);
+        width: 100%;
+        padding: 0.625rem 0.75rem;
+        border-radius: 0.5rem;
+        border: 0.0625rem solid $color-dark-border;
+        font-size: $font-size-base;
+        font-weight: 500;
+
+        .new-chat-img {
+            @include size(1.2em);
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+    }
+
+    .new-chat-icon,
+    .recent-btn {
+        display: none;
+    }
+
+    &__scrollable-content {
+        padding: 0 0.75rem;
+        @include flex-container(column, flex-start, stretch, nowrap, 0.25rem);
+    }
+
+    &__nav {
+        margin-top: 0.25rem;
+    }
+
+    &__menu {
+        @include flex-container(column, flex-start, stretch, nowrap, 0.25rem);
+    }
+
+    &__item,
+    &__list-item {
+        @include flex-container(row, flex-start, center, nowrap, 0.75rem);
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: $font-size-base;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            background-color: $color-dark-card;
+            color: $text-main;
+        }
+    }
+
+    &__item {
+        &-energy-img {
+            height: 1.5em;
+            width: 1.5em;
+            transform: rotate(-60deg);
+            filter: brightness(0) invert(1);
+            opacity: 1;
+        }
+
+        &-i {
+            color: $color-light;
+        }
+    }
+
+    &__section {
+        margin-top: 0.75rem;
+    }
+
+    &__heading-wrapper {
+        @include flex-container(row, space-between, center);
+        padding: 0.5rem 0.75rem;
+
+        .sidebar__heading-btn {
+            @include flex-container(row, flex-start, center, nowrap, 0.25rem);
+            background: transparent;
+            color: $text-muted;
+
+            .sidebar__heading {
+                padding: 0;
+            }
+
+            .sidebar__heading-chevron {
+                @include size(0.875rem);
+                filter: brightness(0) invert(1);
+            }
+        }
+
+        .sidebar__heading-actions {
+            @include flex-container(row, flex-end, center, nowrap, 0.25rem);
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        &:hover {
+            .sidebar__heading-actions {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__heading {
+        font-size: 0.75rem;
+        color: $text-muted;
+        padding: 0.5rem 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.0313rem;
+    }
+
+    &__list {
+        @include flex-container(column, flex-start, stretch, nowrap, 0.125rem);
+    }
+
+    &__chat-item {
+        @include flex-container(row, space-between, center, nowrap, 0.5rem);
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: $font-size-base;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-dark-card;
+            color: $text-main;
+
+            .sidebar__chat-actions {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__chat-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__chat-actions {
+        @include flex-container(row, flex-end, center, nowrap, 0.25rem);
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    &__action-btn {
+        @include size(1.25rem);
+        @include center();
+        border-radius: 0.25rem;
+        background: transparent;
+
+        img {
+            @include size(1rem);
+            filter: brightness(0) invert(1);
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    &__more-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: $font-size-sm;
+        color: $text-muted;
+        width: 100%;
+        text-align: left;
+    }
+
+    &__footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        background-color: $color-dark;
+        padding: 0.75rem;
+        border-top: 0.0625rem solid $color-dark-border;
+        margin-top: auto;
+        @include flex-container(column, flex-start, stretch, nowrap, 0.5rem);
+    }
+
+    &__offer-btn {
+        @include button($color-dark-card, $text-main, 0.5rem 0.75rem, 1.25rem);
+        @include flex-container(row, center, center, nowrap, 0.5rem);
+        font-size: $font-size-sm;
+    }
+
+    &.collapsed {
+        width: 3.5rem;
+        padding: 0;
+
+        .sidebar__title,
+        .sidebar__static-nav,
+        .sidebar__scrollable-content,
+        .sidebar__offer-btn,
+        .user-profile__info {
+            display: none;
+        }
+
+        .sidebar__static-top {
+            @include flex-container(column, flex-start, center, nowrap, 1.25rem);
+            width: 100%;
+            padding: 0.75rem 0.375rem;
+        }
+
+        .sidebar__header {
+            width: 100%;
+            padding: 0;
+            justify-content: center;
+
+            .sidebar__actions {
+                width: 100%;
+                justify-content: center;
+
+                .toggle-btn {
+                    .icon-app {
+                        display: block;
+                    }
+                    .icon-sidebar {
+                        display: none;
+                    }
+
+                    &:hover {
+                        .icon-app {
+                            display: none;
+                        }
+                        .icon-sidebar {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .new-chat-icon {
+            display: flex;
+        }
+
+        .search-btn {
+            display: flex;
+        }
+
+        .recent-btn {
+            display: flex;
+        }
+
+        .sidebar__footer {
+            border-top: none;
+            padding: 0.75rem 0.375rem;
+            margin-top: auto;
+            width: 100%;
+            @include flex-container(column, center, center);
+        }
+
+        .user-profile {
+            padding: 0;
+            justify-content: center;
+
+            &__avatar {
+                @include size(2.25rem);
+                font-size: 0.875rem;
+            }
+        }
+    }
+}
+
+.img-color {
+    filter: brightness(0) invert(1);
+}
+
+.user-profile {
+    @include flex-container(row, flex-start, center, nowrap, 0.75rem);
+    padding: 0.5rem;
+
+    &__avatar {
+        @include size(2rem);
+        @include center();
+        background-color: #00875a;
+        color: white;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    &__info {
+        @include flex-container(column, center, flex-start);
+    }
+
+    &__name {
+        font-size: $font-size-sm;
+        font-weight: 500;
+    }
+
+    &__plan {
+        font-size: 0.75rem;
+        color: $text-muted;
+    }
+}

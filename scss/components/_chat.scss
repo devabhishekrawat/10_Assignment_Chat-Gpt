@@ -1,0 +1,125 @@
+@use "../abstract/variables.scss" as *;
+@use "../abstract/mixins.scss" as *;
+
+.chat {
+    flex: 1;
+    @include flex-container(column, space-between, stretch);
+    height: 100%;
+    position: relative;
+    background-color: $bg-primary;
+
+    &__header {
+        @include flex-container(row, flex-end, center);
+        padding: 1rem 1.5rem;
+    }
+
+    &__header-right {
+        @include flex-container(row, flex-end, center, nowrap, 0.75rem);
+    }
+
+    &__offer-badge {
+        @include button(transparent, $free-offer, 0.375rem 0.75rem, 1rem);
+        @include flex-container(row, center, center, nowrap, 0.375rem);
+        font-size: $font-size-sm;
+        height: 3.5em;
+
+        &:hover {
+            background-color: $color-dark-card;
+        }
+    }
+
+    &__content {
+        @include flex-container(column, center, center, nowrap, 1.5rem);
+        max-width: 48rem;
+        width: 100%;
+        margin: auto;
+        padding: 0 1rem;
+    }
+
+    &__greeting {
+        font-size: $font-size-title;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    &__suggestions {
+        @include flex-container(column, center, center, wrap, 0.75rem);
+        width: 100%;
+    }
+
+    &__suggestion {
+        @include flex-container(row, space-between, center, wrap, 0.5rem);
+        border-radius: 0.5em;
+        width: 100%;
+        padding: 0 0.3em;
+
+        &:hover {
+            background-color: $color-dark-card;
+            cursor: pointer;
+        }
+
+        .chip__close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            opacity: 0;
+            visibility: hidden;
+
+            img {
+                width: 0.875rem;
+                height: 0.875rem;
+            }
+        }
+
+        &:hover {
+            .chip__close {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .chip {
+                color: $color-light
+            }
+
+            .img-light-color {
+                opacity: 1;
+            }
+
+        }
+    }
+
+}
+
+.chip {
+    @include flex-container(row, center, center, nowrap, 0.5rem);
+    padding: 0.625rem 1rem;
+    border-radius: 1.25rem;
+    // border: 0.0625rem solid $color-dark-border;
+    background: transparent;
+    font-size: $font-size-sm;
+    color: $color-text-muted-light;
+}
+
+.chat__icon-btn {
+    @include button(transparent, $text-main, 0.375rem 0.75rem, 2rem);
+    @include size(4em);
+    @include flex-container(row, center, center, nowrap, 0.375rem);
+    font-size: $font-size-sm;
+    padding: 0.5rem 0.6rem;
+
+
+    &:hover {
+        background-color: $color-dark-card;
+
+    }
+}
+
+.img-light-color {
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+}

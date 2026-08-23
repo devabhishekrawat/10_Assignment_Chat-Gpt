@@ -1,22 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./assets/logo.svg">
-    <meta name="description" content="Use ChatGPT to answer questions, write, create images,
-         complete work, and code—all in one place. Get started for free or download the app.">
-    <meta name="keyword" content="ai chat,ai,chap gpt,chat gbt,chat gpt 3,chat gpt login,
-         chat gpt website,chat gpt,chat gtp,chat openai,chat,chatai,chatbot gpt,chatg,chatgpt login,
-         chatgpt,gpt chat,open ai,openai chat,openai chatgpt,openai">
+    <meta name="description"
+        content="Use ChatGPT to answer questions, write, create images, complete work, and code—all in one place. Get started for free or download the app.">
+    <meta name="keyword"
+        content="ai chat,ai,chap gpt,chat gbt,chat gpt 3,chat gpt login,chat gpt website,chat gpt,chat gtp,chat openai,chat,chatai,chatbot gpt,chatg,chatgpt login,chatgpt,gpt chat,open ai,openai chat,openai chatgpt,openai">
     <script src="https://kit.fontawesome.com/f597e5edc0.js" crossorigin="anonymous"></script>
-
-    <title>ChatGpt</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>ChatGPT</title>
 </head>
 
-<body>
-    
+<body class="app">
+    <aside class="sidebar">
+        <div class="sidebar__static-top">
+            <div class="sidebar__header">
+                <h1 class="sidebar__title">ChatGPT</h1>
+                <div class="sidebar__actions">
+                    <button class="sidebar__icon-btn search-btn">
+                        <img class="img-color" src="./assets/search.svg" alt="search">
+                    </button>
+                    <button class="sidebar__icon-btn toggle-btn">
+                        <img class="img-color icon-app" src="./assets/logo.svg" alt="ChatGPT logo">
+                        <img class="img-color icon-sidebar" src="./assets/layout-sidebar.svg" alt="sidebar toggle">
+                    </button>
+                </div>
+            </div>
+
+            <button class="sidebar__icon-btn new-chat-icon">
+                <img class="img-color" src="./assets/square-pen.svg" alt="new chat">
+            </button>
+
+            <button class="sidebar__icon-btn recent-btn">
+                <img class="img-color" src="./assets/message-circle-more.svg" alt="recent">
+            </button>
+
+            <div class="sidebar__static-nav">
+                <button class="sidebar__new-chat" aria-label="New chat">
+                    <img class="img-color new-chat-img" src="./assets/square-pen.svg" alt="new chat">
+                    <span>New chat</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar__scrollable-content">
+            <nav class="sidebar__nav">
+                <ul class="sidebar__menu">
+                    <button>
+                        <li class="sidebar__item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="7" y="3" width="12" height="12" rx="3" transform="rotate(18 13 9)" />
+                                <g transform="rotate(-8 11 14)">
+                                    <rect x="3" y="7" width="13" height="13" rx="3" fill="#121212" stroke="none" />
+                                    <rect x="3" y="7" width="13" height="13" rx="3" fill="none" />
+                                    <circle cx="11" cy="10.5" r="1" fill="currentColor" stroke="none" />
+                                    <path d="M5.5 17l3-3 2.5 2.5 2-2 2 2.5" />
+                                </g>
+                            </svg>
+                            <span>Images</span>
+                        </li>
+                    </button>
+                    <button>
+                        <li class="sidebar__item"><img class="img-color" src="./assets/library-big.svg"
+                                alt="library"><span>Library</span></li>
+                    </button>
+                    <button>
+                        <li class="sidebar__item"><img class="sidebar__item-energy-img" src="./assets/energy.svg"
+                                alt="plugins"><span>Plugins</span></li>
+                    </button>
+                    <button>
+                        <li class="sidebar__item"><img class="img-color" src="./assets/codex.svg"
+                                alt="codex"><span>Codex</span></li>
+                    </button>
+                    <button>
+                        <li class="sidebar__item"><img class="img-color" src="./assets/dots.svg"
+                                alt="more"><span>More</span></li>
+                    </button>
+                </ul>
+            </nav>
+
+            <div class="sidebar__section">
+                <h2 class="sidebar__heading">Projects</h2>
+                <ul class="sidebar__list">
+                    <li class="sidebar__list-item"><img src="" alt=""><span>Python quest for beginner t...</span></li>
+                    <li class="sidebar__list-item"><img src="" alt=""><span>Sql practise</span></li>
+                    <li class="sidebar__list-item"><img src="" alt=""><span>HealthCareManagementSyst...</span></li>
+                    <li class="sidebar__list-item"><img src="" alt=""><span>basic DSA</span></li>
+                    <li class="sidebar__list-item"><img src="" alt=""><span>mongodb practise</span></li>
+                </ul>
+                <button class="sidebar__more-btn">Show more</button>
+            </div>
+
+            <div class="sidebar__section sidebar__section--chats">
+                <div class="sidebar__heading-wrapper">
+                    <button class="sidebar__heading-btn">
+                        <h2 class="sidebar__heading">Chats</h2>
+                        <img class="sidebar__heading-chevron" src="./assets/chevron-down.svg" alt="dropdown">
+                    </button>
+                    <div class="sidebar__heading-actions">
+                        <button class="sidebar__action-btn"><img src="./assets/square-pen.svg" alt="new chat"></button>
+                        <button class="sidebar__action-btn"><img src="./assets/dots.svg" alt="more"></button>
+                    </div>
+                </div>
+
+                <div class="sidebar__chat-item">
+                    <span class="sidebar__chat-title">Greeting response</span>
+                    <div class="sidebar__chat-actions">
+                        <button class="sidebar__action-btn"><img src="./assets/pin.svg" alt="pin"></button>
+                        <button class="sidebar__action-btn"><img src="./assets/dots.svg" alt="more"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar__footer">
+            <div class="user-profile">
+                <div class="user-profile__avatar">AR</div>
+                <div class="user-profile__info">
+                    <span class="user-profile__name">Abhishek Rawat</span>
+                    <span class="user-profile__plan">Free</span>
+                </div>
+            </div>
+            <button class="sidebar__offer-btn">
+                <img src="" alt="">
+                <span>Claim offer</span>
+            </button>
+        </div>
+    </aside>
+    <main class="chat">
+        <header class="chat__header">
+            <div class="chat__header-right">
+                <button class="chat__offer-badge">
+                    <img class="" src="./assets/gift.svg" alt="Free Offer">
+                    <span>Free offer</span>
+                </button>
+                <button class="chat__icon-btn"><img class="img-color" src="./assets/message-circle-dashed.svg"
+                        alt="Temporary Chat"></button>
+            </div>
+        </header>
+
+        <section class="chat__content">
+            <h1 class="chat__greeting">How can I help, Abhishek?</h1>
+            <div class="msg-input">
+                <div class="msg-input__field">
+                    <button class="msg-input__add-btn"><img class="msg-input__action-btn-img" src="./assets/plus.svg"
+                            alt=""></button>
+                    <input type="text" class="msg-input__control" placeholder="Ask anything">
+                    <div class="msg-input__tools">
+                        <button class="msg-input__tool-btn"><img class="msg-input__action-btn-img"
+                                src="./assets/brain.svg" alt=""><span
+                                class="msg-input__action-btn-text">Think</span></button>
+                        <button class="msg-input__tool-btn"><img class="img-color" src="./assets/microphone.svg"
+                                alt=""></button>
+                        <button class="msg-input__action-btn"><img src="./assets/voice.svg" alt=""></button>
+                    </div>
+                </div>
+            </div>
+            <div class="chat__suggestions">
+                <div class="chat__suggestion">
+                    <button class="chip" type="button">
+                        <img class="chip__icon img-light-color" src="./assets/pencil.svg" alt="Write or edit">
+                        <span class="chip__label">Write or edit</span>
+                    </button>
+
+                    <button class="chip__close" type="button" aria-label="Close suggestion">
+                        <img class="chip__close-img" src="./assets/x.svg" alt="Close">
+                    </button>
+                </div>
+
+                <div class="chat__suggestion">
+                    <button class="chip" type="button">
+                        <img class="chip__icon img-light-color" src="./assets/world.svg" alt="Search on web">
+                        <span class="chip__label">Search the web</span>
+                    </button>
+
+                    <button class="chip__close" type="button" aria-label="Close suggestion">
+                        <img class="chip__close-img" src="./assets/x.svg" alt="Close">
+                    </button>
+                </div>
+            </div>
+
+
+        </section>
+    </main>
+
     <script src="./js/main.js"></script>
 </body>
 

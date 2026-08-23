@@ -1,0 +1,41 @@
+@use "../abstract/variables.scss" as *;
+@use "../abstract/mixins.scss" as *;
+
+.app {
+    @include flex-container(row, flex-start, stretch);
+    @include size(100vw, 100vh);
+}
+
+html[data-theme="light"] {
+    body {
+        background-color: $color-light;
+        color: $color-text-main-light;
+    }
+
+    .sidebar {
+        background-color: $color-light-surface;
+        border-right-color: $color-light-border;
+        color: $color-text-main-light;
+
+        &__item:hover,
+        &__list-item:hover {
+            background-color: $color-light-card;
+        }
+
+        &__new-chat {
+            border-color: $color-light-border;
+        }
+    }
+
+    .msg-input__field {
+        background-color: $color-light-card;
+        border-color: $color-light-border;
+    }
+
+    .chip {
+        border-color: $color-light-border;
+        &:hover {
+            background-color: $color-light-card;
+        }
+    }
+}

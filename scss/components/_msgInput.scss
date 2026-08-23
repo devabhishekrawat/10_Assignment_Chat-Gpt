@@ -1,0 +1,76 @@
+@use "../abstract/variables.scss" as *;
+@use "../abstract/mixins.scss" as *;
+
+.msg-input {
+    width: 100%;
+
+    &__field {
+        @include flex-container(row, space-between, center, nowrap, 0.75rem);
+        background-color: $color-dark-card;
+        border: 0.0625rem solid $color-dark-border;
+        border-radius: 1.75rem;
+        padding: 0.5rem 0.5rem;
+        width: 100%;
+    }
+
+    &__control {
+        flex: 1;
+        background: transparent;
+        color: $text-main;
+        font-size: $font-size-base;
+
+        &::placeholder {
+            color: $text-muted;
+        }
+    }
+
+    &__tools {
+        @include flex-container(row, flex-end, center, nowrap, 0.5rem);
+    }
+
+    &__tool-btn {
+        @include flex-container(row, center, center, nowrap, 0.25rem);
+        padding: 0.375rem 0.625rem;
+        border-radius: 1rem;
+        font-size: $font-size-sm;
+        color: $text-muted;
+        gap: 6px;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            // color: $text-main;
+        }
+    }
+
+    &__action-btn {
+        @include size(2rem);
+        @include center();
+        background-color: $color-text-main-dark;
+        border-radius: 50%;
+        color: $color-dark;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    &__add-btn {
+        @include center();
+        @include size(2.4em);
+        border-radius: 1.2em;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+    }
+}
+
+.msg-input__action-btn-img {
+    @include size(1.5em);
+    filter: brightness(0) invert(1);
+    opacity: 0.5;
+}
+
+.msg-input__action-btn-text {
+    font-size: $font-size-lg;
+}

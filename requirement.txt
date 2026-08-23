@@ -1,0 +1,123 @@
+LAYOUT:
+□ Sidebar
+□ Header
+□ Chat area
+□ Composer
+
+SIDEBAR:
+□ New Chat
+□ Search
+□ History
+□ Groups
+□ Active chat
+□ More menu
+□ Rename
+□ Delete
+□ Collapse
+□ Mobile drawer
+
+CHAT:
+□ Empty state
+□ User message
+□ Assistant message
+□ Code block
+□ Lists
+□ Tables
+□ Links
+□ Message actions
+
+COMPOSER:
+□ Textarea
+□ Auto-grow
+□ Attachment
+□ Model selector
+□ Send
+□ Stop
+□ Loading
+□ Disabled
+
+FUNCTIONALITY:
+□ New Chat
+□ Send message
+□ Mock response
+□ Loading/generating
+□ Copy
+□ Like
+□ Dislike
+□ Regenerate
+□ Search
+□ Conversation switching
+□ Model selection
+□ Attachments
+□ Settings
+
+RESPONSIVE:
+□ 375
+□ 390
+□ 414
+□ 768
+□ 1024
+□ 1280
+□ 1440
+□ 1728
+□ No horizontal scroll
+□ Mobile drawer
+□ Mobile header
+□ Responsive composer
+
+DESIGN SYSTEM:
+□ Colors
+□ Spacing
+□ Typography
+□ Radius
+□ Shadows
+□ Breakpoints
+□ Reusable components
+
+ACCESSIBILITY:
+□ Semantic HTML
+□ Keyboard navigation
+□ Focus states
+□ ARIA labels
+□ Button semantics
+□ Contrast
+□ Escape handling
+
+UI STATES:
+□ Default
+□ Hover
+□ Focus
+□ Active
+□ Disabled
+□ Loading
+□ Generating
+□ Empty
+□ Error
+□ Success
+
+CODE QUALITY:
+□ Modular JS
+□ Modular SCSS
+□ No frameworks
+□ No API
+□ No backend
+□ No unnecessary libraries
+□ No giant JS file
+□ No giant SCSS file
+
+SUBMISSION:
+□ Git repository
+□ Deployed app
+□ README
+□ Desktop screenshot
+□ Tablet screenshot
+□ Mobile screenshot
+□ New chat demo
+□ Active chat demo
+□ Sidebar demo
+□ Search demo
+□ Model selector demo
+□ Composer demo
+□ Loading demo
+□ Settings demo
+□ Responsive demo
