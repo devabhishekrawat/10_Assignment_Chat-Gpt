@@ -540,7 +540,15 @@ git push`
         ]
     }
 ];
+const state = {
+    conversations: conversations,
+    currentChatId: null,
+    selectedModel: "balanced",
+    isGenerating: false,
+    attachments: []
+};
 
+export default state;
 
 export const mockResponses = [
     {
@@ -556,17 +564,17 @@ export const mockResponses = [
                 {
                     type: "text",
                     value:
-                        "JavaScript is a programming language used to create interactive and dynamic web applications."
+                        "JavaScript is a lightweight, interpreted (or just-in-time compiled) dynamic programming language with first-class functions. While it is best known as the scripting language for Web pages, many non-browser environments—such as Node.js, Apache CouchDB, and Adobe Acrobat—also use it."
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "Handle user interactions",
-                        "Manipulate the DOM",
-                        "Create dynamic interfaces",
-                        "Build web applications"
+                        "Handle user interactions and complex client-side logic",
+                        "Manipulate the DOM in real-time without full page reloads",
+                        "Fetch data asynchronously using modern Fetch API or Axios",
+                        "Build high-performance web applications using modern frameworks like React, Vue, and Angular"
                     ]
                 }
             ],
@@ -575,15 +583,27 @@ export const mockResponses = [
                 {
                     type: "text",
                     value:
-                        "JavaScript can run in browsers and on servers using environments such as Node.js."
+                        "JavaScript is cross-platform and multi-paradigm, supporting object-oriented, imperative, and declarative programming styles. It runs in browser engines like V8 (Chrome), SpiderMonkey (Firefox), and JavaScriptCore (Safari), as well as server runtime environments like Node.js and Deno."
                 },
 
                 {
                     type: "code",
                     language: "javascript",
-                    value: `const message = "Hello";
+                    value: `// Example: Modern Async JavaScript
+const fetchUserData = async (userId) => {
+    try {
+        const response = await fetch(\`https://api.example.com/users/\${userId}\`);
+        if (!response.ok) throw new Error("Network response was not ok");
+        
+        const data = await response.json();
+        console.log("User retrieved:", data);
+        return data;
+    } catch (error) {
+        console.error("Failed to fetch user:", error);
+    }
+};
 
-console.log(message);`
+fetchUserData(101);`
                 }
             ],
 
@@ -591,7 +611,7 @@ console.log(message);`
                 {
                     type: "text",
                     value:
-                        "JavaScript allows developers to add dynamic behavior to websites and applications."
+                        "Over the years, ECMAScript standards (starting with ES6 in 2015) have introduced powerful features such as arrow functions, destructuring, modules, promises, and classes, making JavaScript a scalable language for full-stack enterprise applications."
                 }
             ]
         ]
@@ -610,25 +630,27 @@ console.log(message);`
                 {
                     type: "text",
                     value:
-                        "A closure is a function that remembers variables from its outer scope."
+                        "A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In JavaScript, closures are created every time a function is created, at function creation time, allowing an inner function to access an outer function's scope even after the outer function has finished executing."
                 },
 
                 {
                     type: "code",
                     language: "javascript",
-                    value: `function outer() {
-    const count = 0;
+                    value: `function createCounter(initialValue = 0) {
+    let count = initialValue;
 
-    function inner() {
-        console.log(count);
-    }
-
-    return inner;
+    return {
+        increment: () => ++count,
+        decrement: () => --count,
+        getValue: () => count
+    };
 }
 
-const example = outer();
-
-example();`
+const counter = createCounter(10);
+console.log(counter.getValue()); // 10
+console.log(counter.increment()); // 11
+console.log(counter.increment()); // 12
+console.log(counter.getValue()); // 12 (count remains preserved in memory)`
                 }
             ],
 
@@ -636,7 +658,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "A closure is created when an inner function maintains access to variables from its outer function."
+                        "Closures allow for powerful design patterns in JavaScript, such as data privacy and encapsulation. Since JavaScript historically lacked private class fields, closures were the primary mechanism for creating private variables that could not be accessed or overwritten directly from the outside."
                 }
             ],
 
@@ -644,17 +666,17 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Closures are commonly used in the following situations:"
+                        "Understanding closures is essential for mastering asynchronous JavaScript, building factory functions, and working with event listeners. Here are typical use cases:"
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "Callbacks",
-                        "Event handlers",
-                        "Factory functions",
-                        "Private state"
+                        "Currying and function partial application",
+                        "Preserving state in event handlers and async callbacks",
+                        "Creating private variables and module patterns",
+                        "Memoization and performance optimization techniques"
                     ]
                 }
             ]
@@ -675,16 +697,20 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Flexbox is a CSS layout system designed to arrange elements in a row or column."
+                        "The Flexible Box Layout Module (Flexbox) is a one-dimensional CSS layout model designed to lay out items in rows or columns. It provides a more efficient way to align, distribute, and structure space among items in a container, even when their sizes are unknown or dynamic."
                 },
 
                 {
                     type: "code",
                     language: "css",
-                    value: `.container {
+                    value: `.navigation-bar {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background-color: #1a1a1a;
 }`
                 }
             ],
@@ -693,17 +719,17 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Flexbox makes responsive layouts easier by allowing items to grow, shrink, and align."
+                        "Flexbox works on a parent-child relationship. The parent container becomes a flex container by applying `display: flex`, and its immediate children become flex items that react to main-axis and cross-axis alignment rules."
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "flex-direction",
-                        "justify-content",
-                        "align-items",
-                        "flex-wrap"
+                        "flex-direction: defines the main axis (row, row-reverse, column, column-reverse)",
+                        "justify-content: defines alignment along the main axis (e.g., center, space-between)",
+                        "align-items: defines default behavior for how flex items are laid out along the cross axis",
+                        "flex-wrap: controls whether the flex container is single-line or multi-line"
                     ]
                 }
             ],
@@ -719,15 +745,15 @@ example();`
                     rows: [
                         [
                             "flex-grow",
-                            "Controls growth"
+                            "Specifies how much a flex item will grow relative to the rest of the flex items when positive free space is distributed."
                         ],
                         [
                             "flex-shrink",
-                            "Controls shrinking"
+                            "Specifies how a flex item will shrink relative to the rest of the flex items when negative free space is distributed."
                         ],
                         [
                             "flex-basis",
-                            "Sets initial size"
+                            "Sets the initial main size of a flex item before free space is distributed according to flex factors."
                         ]
                     ]
                 }
@@ -748,18 +774,19 @@ example();`
                 {
                     type: "text",
                     value:
-                        "The flex-grow property determines how much a flex item can grow when extra space is available."
+                        "The `flex-grow` property dictates the proportion of available extra space inside the flex container that should be allocated to an item. It accepts a unitless numerical value that serves as a relative proportion ratio."
                 },
 
                 {
                     type: "code",
                     language: "css",
-                    value: `.item-one {
-    flex-grow: 1;
+                    value: `.sidebar {
+    width: 250px;
+    flex-grow: 0; /* Remains fixed at 250px */
 }
 
-.item-two {
-    flex-grow: 2;
+.main-content {
+    flex-grow: 1; /* Absorbs all remaining horizontal space */
 }`
                 }
             ],
@@ -778,17 +805,17 @@ example();`
                         [
                             "flex-grow",
                             "0",
-                            "Controls growth"
+                            "Determines how much remaining positive space the item absorbs."
                         ],
                         [
                             "flex-shrink",
                             "1",
-                            "Controls shrinking"
+                            "Determines how much the item contracts when space overflows."
                         ],
                         [
                             "flex-basis",
                             "auto",
-                            "Initial size"
+                            "Defines the baseline size before growing or shrinking occurs."
                         ]
                     ]
                 }
@@ -798,7 +825,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "A flex item with flex-grow: 2 receives twice as much available extra space as an item with flex-grow: 1."
+                        "For example, if all flex items have `flex-grow: 1`, available space will be split equally among them. However, if one item has `flex-grow: 2`, it will attempt to reserve twice as much of the remaining space as the items set to `1`."
                 }
             ]
         ]
@@ -817,14 +844,16 @@ example();`
                 {
                     type: "text",
                     value:
-                        "The flex-shrink property determines how much a flex item can shrink when there is not enough space."
+                        "The `flex-shrink` property specifies how much a flex item will contract relative to the other flex items in the container when the combined size of all items exceeds the available space along the main axis."
                 },
 
                 {
                     type: "code",
                     language: "css",
-                    value: `.item {
-    flex-shrink: 0;
+                    value: `.avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0; /* Ensures the avatar image is never squished */
 }`
                 }
             ],
@@ -833,7 +862,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "A value of 0 prevents a flex item from shrinking."
+                        "Setting `flex-shrink: 0` is extremely useful for UI components such as fixed icons, badges, and avatars inside flex containers, ensuring their dimensions remain fixed regardless of screen size changes."
                 }
             ],
 
@@ -841,7 +870,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "flex-shrink works together with flex-grow and flex-basis to control flex item sizing."
+                        "When combined with `flex-grow` and `flex-basis`, `flex-shrink` forms the shorthand `flex: <grow> <shrink> <basis>`. A common reset rule is `flex: 1 1 auto` for fully responsive elements."
                 }
             ]
         ]
@@ -862,16 +891,28 @@ example();`
                 {
                     type: "text",
                     value:
-                        "SCSS is a CSS preprocessor that adds features such as variables, nesting, mixins, and functions."
+                        "SCSS (Sassy CSS) is an extension syntax of Sass (Syntactically Awesome Style Sheets) that is fully fully compatible with CSS. It adds sophisticated preprocessing capabilities including variables, nested rules, mixins, functions, selector inheritance, and modular code imports."
                 },
 
                 {
                     type: "code",
                     language: "scss",
-                    value: `$primary-color: #000;
+                    value: `$primary-color: #3b82f6;
+$border-radius: 8px;
 
-.button {
-    color: $primary-color;
+.card {
+    background-color: #fff;
+    border-radius: $border-radius;
+    padding: 1.5rem;
+
+    .card-header {
+        color: $primary-color;
+        font-weight: bold;
+    }
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 }`
                 }
             ],
@@ -880,7 +921,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "SCSS helps organize CSS by allowing developers to create reusable variables, mixins, and modular files."
+                        "SCSS enables developers to follow DRY (Don't Repeat Yourself) architecture principles in enterprise design systems through parameterized mixins and functions, simplifying theme management and media query break-points."
                 }
             ],
 
@@ -888,16 +929,25 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Mixins are useful for reusable patterns."
+                        "Mixins allow you to define styles that can be re-used throughout your stylesheet without repeating non-semantic class names."
                 },
 
                 {
                     type: "code",
                     language: "scss",
-                    value: `@mixin center {
+                    value: `@mixin responsive-flex($direction: row, $justify: space-between) {
     display: flex;
-    justify-content: center;
+    flex-direction: $direction;
+    justify-content: $justify;
     align-items: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.header-container {
+    @include responsive-flex(row, space-around);
 }`
                 }
             ]
@@ -918,16 +968,26 @@ example();`
                 {
                     type: "text",
                     value:
-                        "HTML stands for HyperText Markup Language. It provides the structure and content of a web page."
+                        "HTML (HyperText Markup Language) is the standard markup language used to create the structure of web pages. HTML documents consist of a tree of nested nodes and tags that instruct web browsers how to render text, multimedia, forms, and dynamic components."
                 },
 
                 {
                     type: "code",
                     language: "html",
-                    value: `<main>
-    <h1>Hello World</h1>
-    <p>This is a paragraph.</p>
-</main>`
+                    value: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Structure</title>
+</head>
+<body>
+    <main>
+        <h1>Welcome to Web Development</h1>
+        <p>HTML forms the bedrock of web application architecture.</p>
+    </main>
+</body>
+</html>`
                 }
             ],
 
@@ -935,19 +995,19 @@ example();`
                 {
                     type: "text",
                     value:
-                        "HTML5 provides semantic elements that describe the purpose of different sections."
+                        "HTML5 introduced enhanced semantic elements, structural tags, web storage APIs, embedded multimedia (`<audio>` and `<video>`), dynamic graphics canvas APIs, and native input validations, modernizing web application standards."
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "header",
-                        "nav",
-                        "main",
-                        "section",
-                        "article",
-                        "footer"
+                        "<header>: Represents introductory content or navigational links",
+                        "<nav>: Encapsulates major navigation blocks",
+                        "<main>: Represents the dominant content unique to the document",
+                        "<section>: Represents a standalone, generic group of content",
+                        "<article>: Encapsulates self-contained, independently distributable compositions",
+                        "<footer>: Contains footer information such as copyright or metadata"
                     ]
                 }
             ],
@@ -956,7 +1016,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "HTML provides structure, CSS provides presentation, and JavaScript provides behavior."
+                        "The web platform operates on a separation of concerns principle: HTML establishes content structure, CSS controls visual presentation, and JavaScript governs behavior and interactive state."
                 }
             ]
         ]
@@ -976,19 +1036,17 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Semantic HTML uses elements that describe the meaning and purpose of their content."
+                        "Semantic HTML means using HTML elements according to their intended structural purpose rather than purely for styling or layout convenience. For example, using `<button>` instead of `<div onclick=\"...\">` communicates meaning to both browsers and assistive technologies."
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "header",
-                        "nav",
-                        "main",
-                        "article",
-                        "section",
-                        "footer"
+                        "Provides natural landmark roles for Screen Readers and assistive tools",
+                        "Boosts Search Engine Optimization (SEO) by identifying primary text context",
+                        "Improves developer codebase readability, maintenance, and debugging",
+                        "Ensures native keyboard accessibility (e.g., focus management and enter key handling)"
                     ]
                 }
             ],
@@ -997,7 +1055,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Semantic elements improve accessibility and document structure."
+                        "Semantic elements allow accessibility tools (like screen readers) to build accessibility trees seamlessly, helping visually impaired users navigate documents efficiently using landmark shortcuts."
                 }
             ],
 
@@ -1006,17 +1064,23 @@ example();`
                     type: "code",
                     language: "html",
                     value: `<header>
-    <nav>
-        Navigation
+    <nav aria-label="Main Navigation">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
     </nav>
 </header>
 
 <main>
-    Main content
+    <article>
+        <h2>Understanding Semantic HTML</h2>
+        <p>Semantic tags convey explicit structural meaning.</p>
+    </article>
 </main>
 
 <footer>
-    Footer
+    <p>&copy; 2026 Frontend Architecture Handbook</p>
 </footer>`
                 }
             ]
@@ -1037,7 +1101,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "CSS stands for Cascading Style Sheets. It controls the appearance and layout of HTML elements."
+                        "Cascading Style Sheets (CSS) is the stylesheet language used to specify the presentation, layout, visual aesthetics, and formatting of documents written in HTML or XML. It allows web developers to isolate style declarations cleanly from structural content."
                 }
             ],
 
@@ -1045,18 +1109,18 @@ example();`
                 {
                     type: "text",
                     value:
-                        "CSS can control colors, typography, spacing, layouts, animations, and responsive behavior."
+                        "Modern CSS offers layout engines such as Flexbox and CSS Grid, visual transformations, keyframe animations, custom CSS custom properties (variables), media query breakpoints, and container queries for ultra-responsive web development."
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "Colors",
-                        "Typography",
-                        "Spacing",
-                        "Layouts",
-                        "Animations"
+                        "Color spaces & modern palettes (HSL, OKLCH, RGB, Hex)",
+                        "Typography control (custom web fonts, line-height, variable fonts)",
+                        "The Box Model (content, padding, border, margin calculations)",
+                        "Advanced Layout Systems (Flexbox, CSS Grid, Multi-column layout)",
+                        "Animations & Transitions (hardware-accelerated visual transforms)"
                     ]
                 }
             ],
@@ -1065,9 +1129,22 @@ example();`
                 {
                     type: "code",
                     language: "css",
-                    value: `.card {
-    padding: 1rem;
-    border-radius: 0.5rem;
+                    value: `:root {
+    --primary-hue: 220;
+    --brand-color: hsl(var(--primary-hue), 90%, 56%);
+}
+
+.card {
+    background-color: #ffffff;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }`
                 }
             ]
@@ -1087,28 +1164,37 @@ example();`
                 {
                     type: "text",
                     value:
-                        "CSS specificity determines which CSS rule is applied when multiple selectors target the same element."
+                        "CSS Specificity is the scoring system browsers use to determine which property values are applied to an element when multiple competing CSS selectors match the same HTML node. Specificity acts as a 3-column weight system: (IDs, Classes/Attributes/Pseudo-classes, Elements/Pseudo-elements)."
                 },
 
                 {
                     type: "table",
                     headers: [
-                        "Selector",
-                        "Specificity Level"
+                        "Selector Type",
+                        "Weight Category",
+                        "Example"
                     ],
 
                     rows: [
                         [
-                            "Element",
-                            "Low"
+                            "Inline Styles",
+                            "1-0-0-0 (Highest non-override)",
+                            "style='color: red;'"
                         ],
                         [
-                            "Class",
-                            "Medium"
+                            "ID Selectors",
+                            "0-1-0-0",
+                            "#main-header"
                         ],
                         [
-                            "ID",
-                            "High"
+                            "Class / Attribute / Pseudo-class",
+                            "0-0-1-0",
+                            ".btn, [type='text'], :hover"
+                        ],
+                        [
+                            "Element / Pseudo-element",
+                            "0-0-0-1 (Lowest)",
+                            "h1, p, ::before"
                         ]
                     ]
                 }
@@ -1118,7 +1204,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "In general, ID selectors have higher specificity than class selectors, and class selectors have higher specificity than element selectors."
+                        "When specificity scores are identical between two rules targeting the same element, the rule declared latest in the stylesheet wins due to the cascading order principle."
                 }
             ],
 
@@ -1126,15 +1212,18 @@ example();`
                 {
                     type: "code",
                     language: "css",
-                    value: `p {
-    color: red;
+                    value: `/* Specificity score: 0-0-0-1 (Element) */
+p {
+    color: gray;
 }
 
-.text {
+/* Specificity score: 0-0-1-0 (Class) -> Overrides element selector */
+.description {
     color: blue;
 }
 
-#title {
+/* Specificity score: 0-1-0-0 (ID) -> Overrides class & element selectors */
+#intro-text {
     color: green;
 }`
                 }
@@ -1156,16 +1245,16 @@ example();`
                 {
                     type: "text",
                     value:
-                        "An array is a data structure used to store multiple values in a single variable."
+                        "In JavaScript, an array is an ordered list-like object used to store multiple data items in a single variable reference. JavaScript arrays are dynamic, resize automatically, and can contain mixed data types simultaneously."
                 },
 
                 {
                     type: "code",
                     language: "javascript",
-                    value: `const fruits = [
-    "Apple",
-    "Banana",
-    "Orange"
+                    value: `const products = [
+    { id: 1, name: "Laptop", price: 1200, inStock: true },
+    { id: 2, name: "Mouse", price: 25, inStock: false },
+    { id: 3, name: "Keyboard", price: 75, inStock: true }
 ];`
                 }
             ],
@@ -1174,18 +1263,18 @@ example();`
                 {
                     type: "text",
                     value:
-                        "JavaScript arrays provide useful methods for working with collections."
+                        "Modern ES6+ JavaScript offers a rich collection of functional built-in higher-order array methods that do not mutate original arrays, encouraging clean immutable state management pattern:"
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "map",
-                        "filter",
-                        "reduce",
-                        "find",
-                        "forEach"
+                        "map(): Transforms array elements by applying a function to each item",
+                        "filter(): Creates a new array containing elements that pass a logical test condition",
+                        "reduce(): Executes a reducer function to accumulate array elements into a single value",
+                        "find(): Returns the first array element that satisfies a provided testing function",
+                        "some() / every(): Tests whether at least one or all elements satisfy a condition"
                     ]
                 }
             ],
@@ -1194,7 +1283,7 @@ example();`
                 {
                     type: "text",
                     value:
-                        "Arrays are zero-indexed, meaning the first element has index 0."
+                        "JavaScript arrays are zero-indexed, meaning the first index starts at `0`, and the last index corresponds to `array.length - 1`. Negative indexing can be achieved using modern `.at(-1)` syntax."
                 }
             ]
         ]
@@ -1214,21 +1303,21 @@ example();`
                 {
                     type: "text",
                     value:
-                        "The DOM represents an HTML document as a tree of objects that JavaScript can interact with."
+                        "The Document Object Model (DOM) is a cross-platform programming interface that represents an HTML or XML document as a hierarchical tree structure of nodes. The DOM enables scripts (like JavaScript) to access, modify, style, and dynamically construct web page content and events."
                 },
 
                 {
                     type: "code",
                     language: "javascript",
-                    value: `const button =
-    document.querySelector("button");
+                    value: `// Querying and attaching event handlers
+const alertBtn = document.querySelector("#alert-trigger");
+const statusText = document.querySelector(".status-message");
 
-button.addEventListener(
-    "click",
-    () => {
-        console.log("Clicked");
-    }
-);`
+alertBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    statusText.textContent = "Processing action...";
+    statusText.classList.add("active");
+});`
                 }
             ],
 
@@ -1236,7 +1325,7 @@ button.addEventListener(
                 {
                     type: "text",
                     value:
-                        "JavaScript can use the DOM to select elements, change content, modify styles, and respond to events."
+                        "Every HTML tag, attribute, and text snippet becomes an object node in the DOM tree. Developers manipulate the DOM tree using selector methods such as `querySelector`, `querySelectorAll`, `getElementById`, and node manipulation APIs like `appendChild` or `remove`."
                 }
             ],
 
@@ -1244,7 +1333,7 @@ button.addEventListener(
                 {
                     type: "text",
                     value:
-                        "document.querySelector() is commonly used to select an element from the page."
+                        "Because direct DOM manipulation can be computationally expensive due to browser layout repaints and reflows, modern web frameworks like React utilize a Virtual DOM layer to batch and optimize updates."
                 }
             ]
         ]
@@ -1264,15 +1353,17 @@ button.addEventListener(
                 {
                     type: "text",
                     value:
-                        "Git is a distributed version control system used to track changes in source code."
+                        "Git is a distributed version control system designed to track changes in source code during software development. It allows developers to work concurrently across branches, inspect revision histories, revert code regressions, and collaborate effectively."
                 },
 
                 {
                     type: "code",
                     language: "bash",
-                    value: `git init
+                    value: `# Standard Git Feature-Branch Workflow
+git checkout -b feature/user-authentication
 git add .
-git commit -m "Initial commit"`
+git commit -m "feat: add user login and password hash validation"
+git push origin feature/user-authentication`
                 }
             ],
 
@@ -1280,18 +1371,19 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "Common Git commands include:"
+                        "Essential Git terminal commands and daily operations:"
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "git init",
-                        "git add",
-                        "git commit",
-                        "git push",
-                        "git pull"
+                        "git init: Initializes a new local Git repository workspace",
+                        "git status: Inspects untracked, modified, or staged file changes",
+                        "git add: Stages changed files to prepare them for a commit snapshot",
+                        "git commit: Saves staged changes as a permanent revision snapshot",
+                        "git fetch / pull: Downloads remote history changes into your local branch",
+                        "git rebase / merge: Integrates branch commits into your active branch"
                     ]
                 }
             ],
@@ -1300,12 +1392,12 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "GitHub hosts Git repositories and provides collaboration features."
+                        "GitHub is a cloud platform that hosts Git repositories, providing collaboration workflows like Pull Requests, code review tools, continuous integration pipelines (GitHub Actions), and issue tracking."
                 },
 
                 {
                     type: "link",
-                    text: "Visit GitHub",
+                    text: "Explore GitHub Platform Documentation",
                     href: "https://github.com"
                 }
             ]
@@ -1326,13 +1418,17 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "Responsive design allows a website to adapt to different screen sizes and devices."
+                        "Responsive Web Design (RWD) is an approach to web design that ensures user interfaces render smoothly across diverse screen sizes, orientations, pixel densities, and device types—from mobile smartphones to ultra-wide desktop monitors."
                 },
 
                 {
                     type: "code",
                     language: "css",
-                    value: `.container {
+                    value: `/* Responsive Grid Container using modern minmax & clamp */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
     width: min(100% - 2rem, 1200px);
     margin-inline: auto;
 }`
@@ -1343,18 +1439,18 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "Common tools for responsive design include:"
+                        "Key tools and strategy primitives in responsive design include:"
                 },
 
                 {
                     type: "list",
                     style: "unordered",
                     items: [
-                        "Media queries",
-                        "Flexbox",
-                        "CSS Grid",
-                        "clamp()",
-                        "min() and max()"
+                        "Mobile-First Approach: Designing for mobile constraints first, expanding layout complexity upward",
+                        "Fluid Layouts: Utilizing relative percentage units, `ch`, `rem`, `vw`, or CSS `min()`, `max()`, and `clamp()`",
+                        "CSS Media Queries (@media): Applying conditional styles based on viewport dimensions",
+                        "Responsive Images: Using `<picture>` and `srcset` to serve resolution-appropriate images",
+                        "Flexbox and CSS Grid: Automatic item wrapping and flexible space distribution"
                     ]
                 }
             ],
@@ -1363,7 +1459,7 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "A good responsive design changes layouts and interactions when necessary instead of simply shrinking the desktop design."
+                        "A truly responsive application focuses on progressive enhancement—adapting layout grids, font scale, touch target padding, and navigation menus to feel native to each user's viewing context."
                 }
             ]
         ]
@@ -1379,7 +1475,7 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "This is a mock AI response. Try asking something about HTML, CSS, SCSS, JavaScript, Flexbox, Git, or responsive design."
+                        "Welcome to the mock AI interface. You can query any web development topic such as HTML, Semantic HTML, CSS, Specificity, SCSS, JavaScript, Closures, Arrays, DOM Manipulation, Flexbox, Git, or Responsive Design."
                 }
             ],
 
@@ -1387,7 +1483,7 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "I don't have a predefined response for that topic yet. Try asking a frontend development question."
+                        "I don't have a built-in response for that specific keyword. Please try asking a core frontend architecture or developer question."
                 }
             ],
 
@@ -1395,21 +1491,13 @@ git commit -m "Initial commit"`
                 {
                     type: "text",
                     value:
-                        "This frontend application uses predefined responses instead of a real AI API."
+                        "This demo application runs on a client-side mock response dataset designed to emulate real-time AI responses and structured components without requiring live external API tokens."
                 }
             ]
         ]
     }
 ];
-const state = {
-    conversations: [],
-    currentChatId: null,
-    selectedModel: "balanced",
-    isGenerating: false,
-    attachments: []
-};
 
-export default state;
 
 
 export let greetingMsg = {
@@ -1425,4 +1513,22 @@ export let greetingMsg = {
         "Welcome back, {name}.",
         "Hey, {name}. Ready to dive in?"
     ]
+}
+
+export function getRandomGreeting() {
+    const userDataStr = sessionStorage.getItem("user");
+    const user = userDataStr ? JSON.parse(userDataStr) : null;
+
+    const isLoggedIn = user && user.isLoggedIn;
+    const userName = user?.name || "Friend";
+
+    if (!isLoggedIn) {
+        const randomIndex = Math.floor(Math.random() * greetingMsg.NotLogIn.length);
+        return greetingMsg.NotLogIn[randomIndex];
+    }
+
+    const randomIndex = Math.floor(Math.random() * greetingMsg.logIn.length);
+    const selectedGreeting = greetingMsg.logIn[randomIndex];
+
+    return selectedGreeting.replace("{name}", userName);
 }

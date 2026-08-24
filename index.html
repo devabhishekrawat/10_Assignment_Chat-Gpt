@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./assets/logo.svg">
     <meta name="description"
-        content="Use ChatGPT to answer questions, write, create images, complete work, and code—all in one place. Get started for free or download the app.">
-    <meta name="keyword"
-        content="ai chat,ai,chap gpt,chat gbt,chat gpt 3,chat gpt login,chat gpt website,chat gpt,chat gtp,chat openai,chat,chatai,chatbot gpt,chatg,chatgpt login,chatgpt,gpt chat,open ai,openai chat,openai chatgpt,openai">
+        content="Use ChatGPT to answer questions, write, create images, complete work, and code—all in one place.">
     <script src="https://kit.fontawesome.com/f597e5edc0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
     <title>ChatGPT</title>
@@ -83,18 +81,6 @@
                 </ul>
             </nav>
 
-            <div class="sidebar__section">
-                <h2 class="sidebar__heading">Projects</h2>
-                <ul class="sidebar__list">
-                    <li class="sidebar__list-item"><img src="" alt=""><span>Python quest for beginner t...</span></li>
-                    <li class="sidebar__list-item"><img src="" alt=""><span>Sql practise</span></li>
-                    <li class="sidebar__list-item"><img src="" alt=""><span>HealthCareManagementSyst...</span></li>
-                    <li class="sidebar__list-item"><img src="" alt=""><span>basic DSA</span></li>
-                    <li class="sidebar__list-item"><img src="" alt=""><span>mongodb practise</span></li>
-                </ul>
-                <button class="sidebar__more-btn">Show more</button>
-            </div>
-
             <div class="sidebar__section sidebar__section--chats">
                 <div class="sidebar__heading-wrapper">
                     <button class="sidebar__heading-btn">
@@ -107,13 +93,7 @@
                     </div>
                 </div>
 
-                <div class="sidebar__chat-item">
-                    <span class="sidebar__chat-title">Greeting response</span>
-                    <div class="sidebar__chat-actions">
-                        <button class="sidebar__action-btn"><img src="./assets/pin.svg" alt="pin"></button>
-                        <button class="sidebar__action-btn"><img src="./assets/dots.svg" alt="more"></button>
-                    </div>
-                </div>
+                <div id="chats-list-container"></div>
             </div>
         </div>
 
@@ -126,50 +106,126 @@
                 </div>
             </div>
             <button class="sidebar__offer-btn">
-                <img src="" alt="">
+                <img class="img-color" src="./assets/gift.svg" alt="Claim Offer">
                 <span>Claim offer</span>
             </button>
         </div>
     </aside>
-    <main class="chat">
+
+    <main class="chat chat--empty" id="main-chat">
         <header class="chat__header">
             <div class="chat__header-right">
                 <button class="chat__offer-badge">
-                    <img class="" src="./assets/gift.svg" alt="Free Offer">
+                    <img class="img-size chat__offer-badge-img " src="./assets/gift.svg" alt="Free Offer">
                     <span>Free offer</span>
                 </button>
-                <button class="chat__icon-btn"><img class="img-color" src="./assets/message-circle-dashed.svg"
-                        alt="Temporary Chat"></button>
-            </div>
-        </header>
-
-        <section class="chat__content">
-            <h1 class="chat__greeting">How can I help, Abhishek?</h1>
-            <div class="msg-input">
-                <div class="msg-input__field">
-                    <button class="msg-input__add-btn"><img class="msg-input__action-btn-img" src="./assets/plus.svg"
-                            alt=""></button>
-                    <input type="text" class="msg-input__control" placeholder="Ask anything">
-                    <div class="msg-input__tools">
-                        <button class="msg-input__tool-btn"><img class="msg-input__action-btn-img"
-                                src="./assets/brain.svg" alt=""><span
-                                class="msg-input__action-btn-text">Think</span></button>
-                        <button class="msg-input__tool-btn"><img class="img-color" src="./assets/microphone.svg"
-                                alt=""></button>
-                        <button class="msg-input__action-btn"><img src="./assets/voice.svg" alt=""></button>
+                <button class="chat__icon-btn chat__share-btn">
+                    <img class="img-size" src="./assets/share.svg" alt="Share">
+                    <span>Share</span>
+                </button>
+                <button class="chat__icon-btn">
+                    <img class="img-color" src="./assets/message-circle-dashed.svg" alt="Temporary Chat">
+                </button>
+                <div class="chat__dropdown-wrapper">
+                    <button class="chat__icon-btn chat__more-btn">
+                        <img class="img-color" src="./assets/dots.svg" alt="More">
+                    </button>
+                    <div class="chat__dropdown-menu">
+                        <button class="chat__dropdown-item" type="button">
+                            <img class="img-color" src="./assets/pin.svg" alt="Pin">
+                            <span>Pin chat</span>
+                        </button>
+                        <button class="chat__dropdown-item chat__dropdown-item--danger" type="button">
+                            <img src="./assets/trash.svg" alt="Delete">
+                            <span>Delete chat</span>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="chat__suggestions">
+        </header>
+
+        <section class="chat__content" id="chat-content-container">
+            <div class="chat__hero" id="chat-hero">
+                <h1 class="chat__greeting">Hey, Abhishek. Ready to dive in?</h1>
+            </div>
+
+            <div class="chat__messages" id="chat-messages-container"></div>
+
+            <div class="chat__input-wrapper">
+                <div class="msg-input">
+                    <div class="msg-input__field">
+                        <button class="msg-input__add-btn">
+                            <img class="msg-input__action-btn-img" src="./assets/plus.svg" alt="add">
+                        </button>
+                        <textarea class="msg-input__control" id="chat-textarea" placeholder="Ask anything"
+                            rows="1"></textarea>
+                        <div class="msg-input__tools">
+
+                            <div class="msg-input__tool-wrapper" id="model-selector-wrapper">
+                                <button type="button" class="msg-input__tool-btn" id="model-selector-btn">
+                                    <img class="msg-input__action-btn-img" id="selected-model-img"
+                                        src="./assets/brain.svg" alt="Model">
+                                    <span class="msg-input__action-btn-text" id="selected-model-text">GPT-4o</span>
+                                    <i class="fa-solid fa-chevron-down msg-input__chevron"></i>
+                                </button>
+
+                                <div class="model-dropdown is-hidden" id="model-dropdown">
+                                    <div class="model-dropdown__header">Model Selector</div>
+
+                                    <div class="model-dropdown__list">
+                                        <button type="button" class="model-dropdown__item is-active" data-name="GPT-4o">
+                                            <div class="model-dropdown__item-info">
+                                                <span class="model-name">GPT-4o</span>
+                                                <span class="model-desc">Smartest model for complex tasks</span>
+                                            </div>
+                                        </button>
+
+                                        <button type="button" class="model-dropdown__item" data-name="GPT-4o mini">
+                                            <div class="model-dropdown__item-info">
+                                                <span class="model-name">GPT-4o mini</span>
+                                                <span class="model-desc">Fast and lightweight for daily tasks</span>
+                                            </div>
+                                        </button>
+
+                                        <button type="button" class="model-dropdown__item" data-name="o1 Reasoning">
+                                            <div class="model-dropdown__item-info">
+                                                <span class="model-name">o1 Reasoning</span>
+                                                <span class="model-desc">Advanced reasoning and deep math/code
+                                                    solving</span>
+                                            </div>
+                                        </button>
+
+                                        <button type="button" class="model-dropdown__item" data-name="o1-mini">
+                                            <div class="model-dropdown__item-info">
+                                                <span class="model-name">o1-mini</span>
+                                                <span class="model-desc">Faster reasoning for specialized coding</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="msg-input__tool-btn">
+                                <img class="img-color" src="./assets/microphone.svg" alt="mic">
+                            </button>
+                            <button class="msg-input__action-btn">
+                                <img src="./assets/voice.svg" alt="voice">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat__suggestions" id="chat-suggestions">
                 <div class="chat__suggestion">
                     <button class="chip" type="button">
                         <img class="chip__icon img-light-color" src="./assets/pencil.svg" alt="Write or edit">
                         <span class="chip__label">Write or edit</span>
                     </button>
-
                     <button class="chip__close" type="button" aria-label="Close suggestion">
                         <img class="chip__close-img" src="./assets/x.svg" alt="Close">
                     </button>
+
                 </div>
 
                 <div class="chat__suggestion">
@@ -177,18 +233,77 @@
                         <img class="chip__icon img-light-color" src="./assets/world.svg" alt="Search on web">
                         <span class="chip__label">Search the web</span>
                     </button>
-
                     <button class="chip__close" type="button" aria-label="Close suggestion">
                         <img class="chip__close-img" src="./assets/x.svg" alt="Close">
                     </button>
                 </div>
             </div>
-
-
+            </div>
         </section>
     </main>
 
-    <script src="./js/main.js"></script>
+
+
+    <!-- Login Modal Overlay -->
+    <div class="modal-overlay is-hidden" id="login-modal">
+        <div class="modal">
+            <button class="modal__close-btn" id="close-modal-btn" type="button" aria-label="Close modal">
+                <img class="modal__close-btn-img"  src="./assets/x.svg" alt="Close">
+            </button>
+            <h2 class="modal__title">Log in to your account</h2>
+            <p class="modal__subtitle">Welcome back! Please enter your details.</p>
+
+            <form class="modal__form" id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="admin@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="123456" required>
+                </div>
+                <div class="form-error is-hidden" id="login-error">Invalid email or password.</div>
+                <button type="submit" class="btn-submit">Log in</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay is-hidden" id="app-modal-overlay">
+        <div class="modal modal--settings" id="app-modal">
+            <button class="modal__close-btn" id="close-app-modal" type="button" aria-label="Close">
+                <img class="img-color modal__close-btn--imgc" src="./assets/x.svg" alt="Close">
+            </button>
+            <div id="modal-dynamic-content"></div>
+        </div>
+    </div>
+
+
+    <div class="search-modal" id="searchModal" aria-hidden="true" role="dialog" aria-labelledby="searchModalTitle">
+        <div class="search-modal__overlay" id="searchModalOverlay"></div>
+        <div class="search-modal__container">
+            <header class="search-modal__header">
+                <div class="search-modal__input-wrapper">
+                    <img src="./assets/search.svg" alt="" class="search-modal__icon img-color" aria-hidden="true">
+                    <input type="text" id="searchInput" class="search-modal__input"
+                        placeholder="Search conversations..." autocomplete="off">
+                </div>
+                <button type="button" class="search-modal__close-btn" id="searchModalClose"
+                    aria-label="Close search modal">
+                    <img src="./assets/x.svg" alt="" class="img-color" aria-hidden="true">
+                </button>
+            </header>
+
+            <div class="search-modal__body">
+                <div class="search-modal__results" id="searchResults">
+                </div>
+                <div class="search-modal__empty" id="searchEmptyState" style="display: none;">
+                    <p>No conversations found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/main.js" type="module"></script>
 </body>
 
 </html>

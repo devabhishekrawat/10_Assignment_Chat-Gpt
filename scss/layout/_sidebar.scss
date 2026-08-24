@@ -67,6 +67,7 @@
             .icon-app {
                 display: none;
             }
+
             .icon-sidebar {
                 display: block;
             }
@@ -78,7 +79,6 @@
         width: 100%;
         padding: 0.625rem 0.75rem;
         border-radius: 0.5rem;
-        border: 0.0625rem solid $color-dark-border;
         font-size: $font-size-base;
         font-weight: 500;
 
@@ -87,7 +87,7 @@
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.03);
+            background-color: rgba(92, 90, 90, 0.245);
         }
     }
 
@@ -160,6 +160,7 @@
             .sidebar__heading-chevron {
                 @include size(0.875rem);
                 filter: brightness(0) invert(1);
+                transition: transform 0.2s ease;
             }
         }
 
@@ -197,6 +198,15 @@
         cursor: pointer;
 
         &:hover {
+            background-color: $color-dark-card;
+            color: $text-main;
+
+            .sidebar__chat-actions {
+                opacity: 1;
+            }
+        }
+
+        &.active {
             background-color: $color-dark-card;
             color: $text-main;
 
@@ -271,6 +281,7 @@
             display: none;
         }
 
+
         .sidebar__static-top {
             @include flex-container(column, flex-start, center, nowrap, 1.25rem);
             width: 100%;
@@ -285,11 +296,13 @@
             .sidebar__actions {
                 width: 100%;
                 justify-content: center;
+                flex-direction: column-reverse;
 
                 .toggle-btn {
                     .icon-app {
                         display: block;
                     }
+
                     .icon-sidebar {
                         display: none;
                     }
@@ -298,6 +311,7 @@
                         .icon-app {
                             display: none;
                         }
+
                         .icon-sidebar {
                             display: block;
                         }
@@ -308,6 +322,7 @@
 
         .new-chat-icon {
             display: flex;
+            @include size(1.5em);
         }
 
         .search-btn {
@@ -369,4 +384,46 @@
         font-size: 0.75rem;
         color: $text-muted;
     }
+}
+
+#chats-list-container {
+    @include flex-container(column, flex-start, stretch, nowrap, 0.125rem);
+
+    &.is-hidden {
+        display: none;
+    }
+}
+
+.sidebar__heading-btn {
+    &.is-collapsed {
+        .sidebar__heading-chevron {
+            transform: rotate(-90deg);
+        }
+    }
+}
+
+
+.sidebar__login-btn {
+    @include flex-container(row, center, center, nowrap, 0.75rem);
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.5rem;
+    background: transparent;
+    border: 0.0625rem solid $border-color;
+    color: $text-main;
+    font-size: $font-size-base;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    img {
+        @include size(1.125em);
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.sidebar__new-chat.is-active {
+    background-color: rgba(92, 90, 90, 0.245);
 }

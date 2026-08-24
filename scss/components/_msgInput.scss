@@ -2,7 +2,10 @@
 @use "../abstract/mixins.scss" as *;
 
 .msg-input {
+    @include center();
     width: 100%;
+    position: relative;
+    overflow: visible !important;
 
     &__field {
         @include flex-container(row, space-between, center, nowrap, 0.75rem);
@@ -11,6 +14,9 @@
         border-radius: 1.75rem;
         padding: 0.5rem 0.5rem;
         width: 100%;
+        margin-bottom: 1.5em;
+        position: relative;
+        overflow: visible !important;
     }
 
     &__control {
@@ -45,7 +51,7 @@
     &__action-btn {
         @include size(2rem);
         @include center();
-        background-color: $color-text-main-dark;
+        background-color: $free-offer;
         border-radius: 50%;
         color: $color-dark;
 
@@ -73,4 +79,110 @@
 
 .msg-input__action-btn-text {
     font-size: $font-size-lg;
+}
+
+
+/* Model Selector Tool Wrapper */
+.msg-input__tool-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Updated Button Styles */
+.msg-input__tool-btn {
+    @include flex-container(row, center, center, nowrap, 0.375rem);
+    background: transparent;
+    border: none;
+    color: $text-main;
+    cursor: pointer;
+    padding: 0.375rem 0.625rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .msg-input__chevron {
+        font-size: 0.6875rem;
+        color: $text-muted;
+        transition: transform 0.15s ease;
+    }
+}
+
+/* Floating Model Dropdown */
+.model-dropdown {
+    position: absolute;
+    bottom: calc(100% + 0.5rem);
+    right: 0;
+    width: 17.5rem;
+    background-color: $bg-card;
+    border: 0.0625rem solid $border-color;
+    border-radius: 0.875rem;
+    padding: 0.5rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+
+    &.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(0.5rem);
+        pointer-events: none;
+    }
+
+    &__header {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.0313rem;
+        padding: 0.375rem 0.5rem;
+    }
+
+    &__list {
+        @include flex-container(column, flex-start, stretch, nowrap, 0.25rem);
+        margin-top: 0.25rem;
+    }
+
+    &__item {
+        @include flex-container(row, space-between, center, nowrap, 0.5rem);
+        width: 100%;
+        padding: 0.5rem 0.625rem;
+        background: transparent;
+        border: none;
+        border-radius: 0.5rem;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        &.is-active {
+            background-color: rgba(255, 255, 255, 0.12);
+
+            .model-name {
+                color: #10b981;
+                font-weight: 600;
+            }
+        }
+    }
+
+    &__item-info {
+        @include flex-container(column, center, flex-start, nowrap, 0.125rem);
+
+        .model-name {
+            font-size: $font-size-sm;
+            color: $text-main;
+            font-weight: 500;
+        }
+
+        .model-desc {
+            font-size: 0.6875rem;
+            color: $text-muted;
+        }
+    }
 }
