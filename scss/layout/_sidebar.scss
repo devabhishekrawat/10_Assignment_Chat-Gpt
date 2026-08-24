@@ -364,8 +364,8 @@
     &__avatar {
         @include size(2rem);
         @include center();
-        background-color: #00875a;
-        color: white;
+        background-color: $color-accent-dark;
+        color: $color-accent;
         border-radius: 50%;
         font-size: 0.75rem;
         font-weight: 600;

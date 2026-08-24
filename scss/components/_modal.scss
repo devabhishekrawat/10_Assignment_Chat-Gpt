@@ -95,7 +95,7 @@
     }
 
     .form-error {
-        color: #ef4444;
+        color: $color-red;
         font-size: $font-size-sm;
         margin-bottom: 1rem;
 
@@ -142,8 +142,8 @@
         @include size(2rem);
         @include center();
         border-radius: 50%;
-        background-color: #10b981;
-        color: #ffffff;
+        background-color: $color-accent;
+        color: $color-light;
         font-size: $font-size-sm;
         font-weight: 600;
         flex-shrink: 0;
@@ -202,8 +202,8 @@
         @include size(2.25rem);
         @include center();
         border-radius: 50%;
-        background-color: #10b981;
-        color: #ffffff;
+        background-color: $color-accent;
+        color: $color-light;
         font-size: $font-size-sm;
         font-weight: 600;
         flex-shrink: 0;
@@ -324,7 +324,7 @@
         font-weight: 600;
 
         i {
-            color: #10b981;
+            color: $color-accent;
         }
     }
 }
@@ -360,8 +360,8 @@
         @include size(3.5rem);
         @include center();
         border-radius: 50%;
-        background-color: #10b981;
-        color: #ffffff;
+        background-color: $color-accent;
+        color: $color-light;
         font-weight: 600;
         font-size: 1.25rem;
     }

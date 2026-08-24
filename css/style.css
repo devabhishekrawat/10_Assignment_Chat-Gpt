@@ -321,7 +321,6 @@ input {
   max-width: 100%;
   width: 100%;
   min-width: 0;
-  /* Text wrapping overflow protection */
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -346,7 +345,7 @@ input {
 }
 .chat__message--assistant .chat__actions .chat__action-btn:hover {
   background-color: rgba(255, 255, 255, 0.1);
-  color: #f3f4f6;
+  color: #ffffff;
 }
 .chat__message--assistant .chat__actions .chat__action-btn i {
   font-size: 1rem;
@@ -361,8 +360,8 @@ input {
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: 8px;
-  background-color: #1e1e1e;
-  border: 1px solid #333333;
+  background-color: #171717;
+  border: 1px solid #2f2f2f;
   border-radius: 8px;
   padding: 4px;
   display: flex;
@@ -378,7 +377,7 @@ input {
   transform: translateX(-50%);
   border-width: 5px;
   border-style: solid;
-  border-color: #1e1e1e transparent transparent transparent;
+  border-color: #171717 transparent transparent transparent;
 }
 .chat--empty .chat__content {
   justify-content: center;
@@ -757,7 +756,7 @@ input {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: #10a37f;
   color: #ffffff;
   font-size: 0.825rem;
   font-weight: 600;
@@ -824,7 +823,7 @@ input {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: #10a37f;
   color: #ffffff;
   font-size: 0.825rem;
   font-weight: 600;
@@ -955,7 +954,7 @@ input {
   font-weight: 600;
 }
 .profile-popover__subitem.is-active i {
-  color: #10b981;
+  color: #10a37f;
 }
 
 .modal--settings {
@@ -1001,7 +1000,7 @@ input {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: #10a37f;
   color: #ffffff;
   font-weight: 600;
   font-size: 1.25rem;
@@ -1301,14 +1300,12 @@ input {
   font-size: 1.125rem;
 }
 
-/* Model Selector Tool Wrapper */
 .msg-input__tool-wrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
 
-/* Updated Button Styles */
 .msg-input__tool-btn {
   display: flex;
   flex-direction: row;
@@ -1333,7 +1330,6 @@ input {
   transition: transform 0.15s ease;
 }
 
-/* Floating Model Dropdown */
 .model-dropdown {
   position: absolute;
   bottom: calc(100% + 0.5rem);
@@ -1393,7 +1389,7 @@ input {
   background-color: rgba(255, 255, 255, 0.12);
 }
 .model-dropdown__item.is-active .model-name {
-  color: #10b981;
+  color: #10a37f;
   font-weight: 600;
 }
 .model-dropdown__item-info {
@@ -1823,7 +1819,7 @@ input {
   justify-content: center;
   align-items: center;
   background-color: #00875a;
-  color: white;
+  color: #10a37f;
   border-radius: 50%;
   font-size: 0.75rem;
   font-weight: 600;
