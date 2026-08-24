@@ -28,20 +28,26 @@ export function loadConversationsFromStorage() {
     }
 
     const activeId = localStorage.getItem(ACTIVE_CHAT_KEY);
-    if (activeId && state.conversations.some((c) => c.id === activeId)) {
+
+    // If explicit "new_chat" stored or no ID exists, stay in New Chat state
+    if (activeId === "new_chat" || !activeId) {
+        state.currentChatId = null;
+    } else if (state.conversations.some((c) => c.id === activeId)) {
         state.currentChatId = activeId;
-    } else if (state.conversations.length > 0) {
-        state.currentChatId = state.conversations[0].id;
-        localStorage.setItem(ACTIVE_CHAT_KEY, state.currentChatId);
+    } else {
+        state.currentChatId = null;
+        localStorage.setItem(ACTIVE_CHAT_KEY, "new_chat");
     }
 }
 
 export function clearConversationsStorage() {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(ACTIVE_CHAT_KEY);
     state.conversations.length = 0;
     state.currentChatId = null;
 }
 
+// Initial load call
 loadConversationsFromStorage();
 
 const DEFAULT_RESPONSE = {
@@ -77,7 +83,7 @@ function findMatchingResponse(userInput) {
                 let blocks = [];
                 if (Array.isArray(selected)) {
                     blocks = selected;
-                } else if (typeof selected === "object") {
+                } else if (typeof selected === "object" && selected !== null) {
                     blocks = [selected];
                 } else {
                     blocks = [{ type: "text", value: selected }];
@@ -109,6 +115,9 @@ export function createNewChat() {
     state.currentChatId = null;
     state.isGenerating = false;
 
+    // Save explicit "new_chat" flag so refreshes keep user on new chat page
+    localStorage.setItem(ACTIVE_CHAT_KEY, "new_chat");
+
     document.querySelectorAll(".is-active, .active").forEach((el) => {
         el.classList.remove("is-active", "active");
     });
@@ -120,6 +129,17 @@ export function createNewChat() {
     if (newChatBtn) newChatBtn.classList.add("is-active");
 
     renderGreeting();
+}
+
+// Auth Reset Handlers (Call these on login/logout)
+export function handleUserLogout() {
+    createNewChat();
+    renderChatList(state.conversations, handleChatSelection);
+}
+
+export function handleUserLogin() {
+    createNewChat();
+    renderChatList(state.conversations, handleChatSelection);
 }
 
 export function handleSendMessage(inputContent, isLoggedIn = false) {
@@ -174,7 +194,7 @@ export function handleSendMessage(inputContent, isLoggedIn = false) {
 
     state.isGenerating = false;
     renderConversation(currentConversation);
-    resetChatInput()
+    resetChatInput();
     return currentConversation;
 }
 

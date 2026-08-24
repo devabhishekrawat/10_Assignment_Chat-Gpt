@@ -1,6 +1,7 @@
 import { getRandomGreeting } from "./data.js";
-import { clearConversationsStorage } from "./chat.js";
+import { clearConversationsStorage, createNewChat } from "./chat.js";
 import { renderChatList } from "./sidebar.js";
+
 export const STATIC_USER = {
     email: "admin@example.com",
     password: "admin@123",
@@ -214,7 +215,7 @@ function setupProfilePopover(userName, userEmail, onAuthChange) {
 
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            handleLogout()
+            handleLogout();
             if (onAuthChange) onAuthChange();
         });
     }
@@ -327,15 +328,10 @@ function openAppModal(type, userName, userEmail) {
     };
 }
 
-
-
 function handleLogout() {
     sessionStorage.removeItem("user");
-    localStorage.setItem("activeChatId", "new");
-
     clearConversationsStorage();
-
+    createNewChat();
     renderUserProfile();
     renderChatList([], null);
-    renderGreeting();
 }

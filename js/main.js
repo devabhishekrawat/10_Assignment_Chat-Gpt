@@ -1,20 +1,15 @@
-import { conversations } from "./data.js";
 import state from "./data.js";
 import { setupAuthListeners, renderUserProfile } from "./auth.js";
 import { initSidebarControls, renderChatList } from "./sidebar.js";
-import { renderConversation, renderGreeting } from "./chat.js";
+import { renderConversation, renderGreeting, handleSendMessage, loadConversationsFromStorage } from "./chat.js";
 import { initChatInput } from "./input.js";
-import { handleSendMessage } from "./chat.js";
-
 
 const chatInput = document.querySelector(".msg-input__control");
 const sendBtn = document.querySelector(".msg-input__action-btn");
-
 const isLoggedIn = false;
 
 function sendMessage() {
     if (!chatInput) return;
-    console.log(chatInput.value)
     const text = chatInput.value.trim();
     if (!text) return;
 
@@ -49,12 +44,12 @@ function setActiveChat(chatId) {
         item.classList.toggle("active", item.dataset.id == chatId);
     });
 
-    if (chatId === "new") {
+    if (chatId === "new" || !chatId) {
         state.currentChatId = null;
-        localStorage.setItem("activeChatId", "new");
+        localStorage.setItem("activeChatId", "new_chat");
         renderGreeting();
     } else {
-        const selectedChat = conversations.find((c) => c.id == chatId);
+        const selectedChat = state.conversations.find((c) => c.id == chatId);
         if (selectedChat) {
             state.currentChatId = selectedChat.id;
             localStorage.setItem("activeChatId", chatId);
@@ -66,11 +61,11 @@ function setActiveChat(chatId) {
 function initApp() {
     initTheme();
     initChatInput();
+    loadConversationsFromStorage();
 
     const handleAuthChange = () => {
         renderUserProfile(handleAuthChange);
-        renderChatList(conversations, (chatId) => setActiveChat(chatId));
-        setActiveChat("new");
+        renderChatList(state.conversations, (chatId) => setActiveChat(chatId));
     };
 
     setupAuthListeners(handleAuthChange);
@@ -80,18 +75,19 @@ function initApp() {
         setActiveChat(chatId);
     });
 
-    renderChatList(conversations, (chatId) => {
+    renderChatList(state.conversations, (chatId) => {
         setActiveChat(chatId);
     });
 
     const savedChatId = localStorage.getItem("activeChatId");
-    if (savedChatId === "new") {
-        setActiveChat("new");
-    } else if (savedChatId && conversations.some((c) => c.id == savedChatId)) {
-        setActiveChat(savedChatId);
-    } else {
-        setActiveChat("new");
+    if (savedChatId && savedChatId !== "new_chat" && savedChatId !== "new") {
+        const existingChat = state.conversations.find((c) => c.id == savedChatId);
+        if (existingChat) {
+            setActiveChat(savedChatId);
+            return;
+        }
     }
+        setActiveChat("new");
 }
 
 if (document.readyState === "loading") {
@@ -100,103 +96,104 @@ if (document.readyState === "loading") {
     initApp();
 }
 
-
-
-
-const searchModal = document.getElementById('searchModal');
-const searchModalOverlay = document.getElementById('searchModalOverlay');
-const searchModalClose = document.getElementById('searchModalClose');
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
-const searchEmptyState = document.getElementById('searchEmptyState');
-const openSearchBtns = document.querySelectorAll('.search-btn');
+// Modal Search Logic
+const searchModal = document.getElementById("searchModal");
+const searchModalOverlay = document.getElementById("searchModalOverlay");
+const searchModalClose = document.getElementById("searchModalClose");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const searchEmptyState = document.getElementById("searchEmptyState");
+const openSearchBtns = document.querySelectorAll(".search-btn");
 
 function renderResults(filteredConversations) {
-  searchResults.innerHTML = '';
+    if (!searchResults) return;
+    searchResults.innerHTML = "";
 
-  if (filteredConversations.length === 0) {
-    searchEmptyState.style.display = 'block';
-    return;
-  }
+    if (filteredConversations.length === 0) {
+        if (searchEmptyState) searchEmptyState.style.display = "block";
+        return;
+    }
 
-  searchEmptyState.style.display = 'none';
+    if (searchEmptyState) searchEmptyState.style.display = "none";
 
-  filteredConversations.forEach((conv) => {
-    const lastUserMessage = conv.messages
-      ?.filter((m) => m.role === 'user')
-      .pop()?.content;
+    filteredConversations.forEach((conv) => {
+        const lastUserMessage = conv.messages
+            ?.filter((m) => m.role === "user")
+            .pop()?.content;
 
-    const resultItem = document.createElement('div');
-    resultItem.className = 'search-modal__item';
-    resultItem.setAttribute('tabindex', '0');
-    resultItem.dataset.id = conv.id;
+        const resultItem = document.createElement("div");
+        resultItem.className = "search-modal__item";
+        resultItem.setAttribute("tabindex", "0");
+        resultItem.dataset.id = conv.id;
 
-    resultItem.innerHTML = `
-      <div class="search-modal__item-title">${conv.title}</div>
-      ${
-        lastUserMessage
-          ? `<div class="search-modal__item-preview">${lastUserMessage}</div>`
-          : ''
-      }
-    `;
+        resultItem.innerHTML = `
+            <div class="search-modal__item-title">${conv.title}</div>
+            ${
+                lastUserMessage
+                    ? `<div class="search-modal__item-preview">${lastUserMessage}</div>`
+                    : ""
+            }
+        `;
 
-    resultItem.addEventListener('click', () => {
-      openConversation(conv.id);
-      closeModal();
+        resultItem.addEventListener("click", () => {
+            openConversation(conv.id);
+            closeModal();
+        });
+
+        searchResults.appendChild(resultItem);
     });
-
-    searchResults.appendChild(resultItem);
-  });
 }
 
 function handleSearch(event) {
-  const query = event.target.value.toLowerCase().trim();
+    const query = event.target.value.toLowerCase().trim();
 
-  const filtered = conversations.filter((conv) => {
-    const matchesTitle = conv.title.toLowerCase().includes(query);
+    const filtered = state.conversations.filter((conv) => {
+        const matchesTitle = conv.title.toLowerCase().includes(query);
 
-    const matchesMessages = conv.messages.some((msg) => {
-      if (typeof msg.content === 'string') {
-        return msg.content.toLowerCase().includes(query);
-      }
-      if (Array.isArray(msg.content)) {
-        return msg.content.some(
-          (block) => block.value && block.value.toLowerCase().includes(query)
-        );
-      }
-      return false;
+        const matchesMessages = conv.messages.some((msg) => {
+            if (typeof msg.content === "string") {
+                return msg.content.toLowerCase().includes(query);
+            }
+            if (Array.isArray(msg.content)) {
+                return msg.content.some(
+                    (block) => block.value && block.value.toLowerCase().includes(query)
+                );
+            }
+            return false;
+        });
+
+        return matchesTitle || matchesMessages;
     });
 
-    return matchesTitle || matchesMessages;
-  });
-
-  renderResults(filtered);
+    renderResults(filtered);
 }
 
 function openConversation(id) {
-  console.log(`Opening conversation ID: ${id}`);
+    setActiveChat(id);
 }
 
 function openModal() {
-  searchModal.classList.add('search-modal--open');
-  searchModal.setAttribute('aria-hidden', 'false');
-  renderResults(conversations); // Show all conversations initially
-  setTimeout(() => searchInput.focus(), 50);
+    if (!searchModal) return;
+    searchModal.classList.add("search-modal--open");
+    searchModal.setAttribute("aria-hidden", "false");
+    renderResults(state.conversations);
+    setTimeout(() => searchInput && searchInput.focus(), 50);
 }
 
 function closeModal() {
-  searchModal.classList.remove('search-modal--open');
-  searchModal.setAttribute('aria-hidden', 'true');
-  searchInput.value = '';
+    if (!searchModal) return;
+    searchModal.classList.remove("search-modal--open");
+    searchModal.setAttribute("aria-hidden", "true");
+    if (searchInput) searchInput.value = "";
 }
 
-openSearchBtns.forEach((btn) => btn.addEventListener('click', openModal));
-searchModalOverlay.addEventListener('click', closeModal);
-searchModalClose.addEventListener('click', closeModal);
-searchInput.addEventListener('input', handleSearch);
+openSearchBtns.forEach((btn) => btn.addEventListener("click", openModal));
+if (searchModalOverlay) searchModalOverlay.addEventListener("click", closeModal);
+if (searchModalClose) searchModalClose.addEventListener("click", closeModal);
+if (searchInput) searchInput.addEventListener("input", handleSearch);
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && searchModal.classList.contains('search-modal--open')) {
-    closeModal();
-  }
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && searchModal?.classList.contains("search-modal--open")) {
+        closeModal();
+    }
 });
