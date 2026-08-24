@@ -59,7 +59,7 @@ The primary goal of this project is to replicate the ChatGPT user interface, cha
 └── requirement.txt
 
 ---
-
+```
 ## JavaScript Modules Overview
 ```
 main.js: Main application entry point initializing component event listeners.
