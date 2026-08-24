@@ -179,25 +179,21 @@ export function handleSendMessage(inputContent, isLoggedIn = false) {
 }
 
 function regenerateLastResponse(msgObj) {
-    // 1. Find topic group by checking both `id` and `topic`
     let topicGroup = mockResponses.find(
         (t) => t.id === msgObj.responseType || t.topic === msgObj.responseType
     );
 
-    // 2. Fallback: If not found, use the first available topic or default
     if (!topicGroup || !topicGroup.responses || !topicGroup.responses.length) {
         topicGroup = mockResponses[0];
     }
 
     if (!topicGroup || !topicGroup.responses.length) return;
 
-    // 3. Cycle to the next response array index safely
     const responses = topicGroup.responses;
     const currentIndex = typeof msgObj.responseIndex === "number" ? msgObj.responseIndex : 0;
     let nextIndex = (currentIndex + 1) % responses.length;
     const selected = responses[nextIndex];
 
-    // 4. Format the content blocks appropriately
     let blocks = [];
     if (Array.isArray(selected)) {
         blocks = selected;
@@ -207,12 +203,10 @@ function regenerateLastResponse(msgObj) {
         blocks = [{ type: "text", value: selected }];
     }
 
-    // 5. Update message object state
     msgObj.content = blocks;
     msgObj.responseIndex = nextIndex;
     msgObj.responseType = topicGroup.id || topicGroup.topic;
 
-    // 6. Save changes and re-render UI
     saveConversationsToStorage();
 
     const currentConversation = state.conversations.find((c) => c.id === state.currentChatId);

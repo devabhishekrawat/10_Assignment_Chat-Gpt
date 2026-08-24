@@ -82,14 +82,12 @@
 }
 
 
-/* Model Selector Tool Wrapper */
 .msg-input__tool-wrapper {
     position: relative;
     display: inline-flex;
     align-items: center;
 }
 
-/* Updated Button Styles */
 .msg-input__tool-btn {
     @include flex-container(row, center, center, nowrap, 0.375rem);
     background: transparent;
@@ -111,7 +109,6 @@
     }
 }
 
-/* Floating Model Dropdown */
 .model-dropdown {
     position: absolute;
     bottom: calc(100% + 0.5rem);

@@ -109,9 +109,9 @@
         margin: 0 auto;
         padding-bottom: 1.5rem;
         flex-shrink: 0;
-        position: sticky; // Pins input to viewport bottom without narrowing it
+        position: sticky; 
         bottom: 0;
-        background-color: $bg-primary; // Ensures chat text doesn't show behind input on scroll
+        background-color: $bg-primary; 
     }
 
     &__suggestions {
@@ -234,7 +234,6 @@
                 max-width: 100%;
                 width: 100%;
                 min-width: 0;
-                /* Text wrapping overflow protection */
                 overflow-wrap: anywhere;
                 word-break: break-word;
             }
