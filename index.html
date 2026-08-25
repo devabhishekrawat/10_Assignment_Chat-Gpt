@@ -19,21 +19,21 @@
                 <h1 class="sidebar__title">ChatGPT</h1>
                 <div class="sidebar__actions">
                     <button class="sidebar__icon-btn search-btn">
-                        <img class="img-color" src="./assets/search.svg" alt="search">
+                        <img class="img-color " src="./assets/search.svg" alt="search">
                     </button>
                     <button class="sidebar__icon-btn toggle-btn">
-                        <img class="img-color icon-app" src="./assets/logo.svg" alt="ChatGPT logo">
+                        <img class=" icon-app img-invert-color" src="./assets/logo.svg" alt="ChatGPT logo">
                         <img class="img-color icon-sidebar" src="./assets/layout-sidebar.svg" alt="sidebar toggle">
                     </button>
                 </div>
             </div>
 
             <button class="sidebar__icon-btn new-chat-icon">
-                <img class="img-color" src="./assets/square-pen.svg" alt="new chat">
+                <img class="img-color new-chat-icon" src="./assets/square-pen.svg" alt="new chat">
             </button>
 
             <button class="sidebar__icon-btn recent-btn">
-                <img class="img-color" src="./assets/message-circle-more.svg" alt="recent">
+                <img class="img-invert-color recent-msg" src="./assets/message-circle-more.svg" alt="recent">
             </button>
 
             <div class="sidebar__static-nav">
@@ -120,7 +120,7 @@
                     <span>Free offer</span>
                 </button>
                 <button class="chat__icon-btn chat__share-btn">
-                    <img class="img-size" src="./assets/share.svg" alt="Share">
+                    <img class="img-invert-color" src="./assets/share.svg" alt="Share">
                     <span>Share</span>
                 </button>
                 <button class="chat__icon-btn">
@@ -132,10 +132,10 @@
                     </button>
                     <div class="chat__dropdown-menu">
                         <button class="chat__dropdown-item" type="button">
-                            <img class="img-color" src="./assets/pin.svg" alt="Pin">
+                            <img class="img-invert-color" src="./assets/pin.svg" alt="Pin">
                             <span>Pin chat</span>
                         </button>
-                        <button class="chat__dropdown-item chat__dropdown-item--danger" type="button">
+                        <button class="chat__dropdown-item chat__dropdown-item--danger" type="button" id="delete-chat-btn">
                             <img src="./assets/trash.svg" alt="Delete">
                             <span>Delete chat</span>
                         </button>
@@ -213,7 +213,10 @@
                             </button>
                         </div>
                     </div>
+
                 </div>
+                <p class="msg-input__disclaimer">ChatGPT can make mistakes. Check important info.</p>
+
             </div>
 
             <div class="chat__suggestions" id="chat-suggestions">
@@ -248,7 +251,7 @@
     <div class="modal-overlay is-hidden" id="login-modal">
         <div class="modal">
             <button class="modal__close-btn" id="close-modal-btn" type="button" aria-label="Close modal">
-                <img class="modal__close-btn-img"  src="./assets/x.svg" alt="Close">
+                <img class="modal__close-btn-img" src="./assets/x.svg" alt="Close">
             </button>
             <h2 class="modal__title">Log in to your account</h2>
             <p class="modal__subtitle">Welcome back! Please enter your details.</p>
@@ -271,7 +274,7 @@
     <div class="modal-overlay is-hidden" id="app-modal-overlay">
         <div class="modal modal--settings" id="app-modal">
             <button class="modal__close-btn" id="close-app-modal" type="button" aria-label="Close">
-                <img class="img-color modal__close-btn--imgc" src="./assets/x.svg" alt="Close">
+                <img class="img-invert-color modal__close-btn--imgc" src="./assets/x.svg" alt="Close">
             </button>
             <div id="modal-dynamic-content"></div>
         </div>

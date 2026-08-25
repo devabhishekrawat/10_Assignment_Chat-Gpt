@@ -29,7 +29,6 @@ export function loadConversationsFromStorage() {
 
     const activeId = localStorage.getItem(ACTIVE_CHAT_KEY);
 
-    // If explicit "new_chat" stored or no ID exists, stay in New Chat state
     if (activeId === "new_chat" || !activeId) {
         state.currentChatId = null;
     } else if (state.conversations.some((c) => c.id === activeId)) {
@@ -47,7 +46,6 @@ export function clearConversationsStorage() {
     state.currentChatId = null;
 }
 
-// Initial load call
 loadConversationsFromStorage();
 
 const DEFAULT_RESPONSE = {
@@ -115,7 +113,6 @@ export function createNewChat() {
     state.currentChatId = null;
     state.isGenerating = false;
 
-    // Save explicit "new_chat" flag so refreshes keep user on new chat page
     localStorage.setItem(ACTIVE_CHAT_KEY, "new_chat");
 
     document.querySelectorAll(".is-active, .active").forEach((el) => {
@@ -131,7 +128,24 @@ export function createNewChat() {
     renderGreeting();
 }
 
-// Auth Reset Handlers (Call these on login/logout)
+export function deleteCurrentChat() {
+    if (!state.currentChatId) return;
+
+    const index = state.conversations.findIndex((c) => c.id === state.currentChatId);
+    if (index === -1) return;
+
+    state.conversations.splice(index, 1);
+    saveConversationsToStorage();
+
+    if (state.conversations.length > 0) {
+        handleChatSelection(state.conversations[0].id);
+    } else {
+        createNewChat();
+    }
+
+    renderChatList(state.conversations, handleChatSelection);
+}
+
 export function handleUserLogout() {
     createNewChat();
     renderChatList(state.conversations, handleChatSelection);
@@ -249,16 +263,34 @@ function createMessageActionsBar(msgObj) {
     actionsContainer.classList.add("chat__actions");
 
     const copyBtn = document.createElement("button");
+
     copyBtn.classList.add("chat__action-btn");
     copyBtn.title = "Copy";
-    copyBtn.innerHTML = `<img class="img-color res-icons" src="./assets/copy.svg" alt="Copy" class="chat__action-icon" />`;
+
+    copyBtn.innerHTML = `
+    <img 
+        class="img-color img-size chat__action-icon" 
+        src="./assets/copy.svg" 
+        alt="Copy"
+    />
+`;
+
     copyBtn.addEventListener("click", () => {
         const textToCopy = extractMessagePlainText(msgObj.content);
         navigator.clipboard.writeText(textToCopy);
         const img = copyBtn.querySelector("img");
-        if (img) img.src = "./assets/check-check.svg";
+        if (img) {
+            img.src = "./assets/check-check.svg";
+            img.classList.remove("img-color");
+            img.classList.add("res-icons");
+        }
+
         setTimeout(() => {
-            if (img) img.src = "./assets/copy.svg";
+            if (img) {
+                img.src = "./assets/copy.svg";
+                img.classList.remove("res-icons");
+                img.classList.add("img-color");
+            }
         }, 1500);
     });
 
@@ -536,5 +568,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const newChatBtn = document.querySelector(".sidebar__new-chat");
     if (newChatBtn) {
         newChatBtn.addEventListener("click", createNewChat);
+    }
+
+    const deleteChatBtn = document.getElementById("delete-chat-btn");
+    if (deleteChatBtn) {
+        deleteChatBtn.addEventListener("click", deleteCurrentChat);
     }
 });

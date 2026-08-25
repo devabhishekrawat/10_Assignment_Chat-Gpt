@@ -4,14 +4,15 @@
 .sidebar {
     @include size(16rem, 100%);
     @include flex-container(column, flex-start, stretch, nowrap, 0);
-    background-color: $color-dark;
-    border-right: 0.0625rem solid $color-dark-border;
+    background-color: var(--bg-secondary);
+    border-right: 0.0625rem solid var(--border-color);
     overflow-y: auto;
     overflow-x: hidden;
     transition: width 0.2s ease;
+    color: var(--text-main);
 
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    scrollbar-color: var(--text-muted) transparent;
 
     &::-webkit-scrollbar {
         width: 0.375rem;
@@ -22,11 +23,11 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: var(--text-muted);
         border-radius: 0.25rem;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: var(--text-main);
         }
     }
 
@@ -35,7 +36,7 @@
         position: sticky;
         top: 0;
         z-index: 10;
-        background-color: $color-dark;
+        background-color: var(--bg-secondary);
         padding: 0.75rem 0.75rem 0.5rem 0.75rem;
     }
 
@@ -47,6 +48,7 @@
     &__title {
         font-size: $font-size-lg;
         font-weight: 600;
+        color: var(--text-main);
     }
 
     &__actions {
@@ -58,9 +60,10 @@
         @include center();
         border-radius: 0.375rem;
         position: relative;
+        color: var(--text-main);
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--hover-bg);
         }
 
         &.toggle-btn {
@@ -81,13 +84,15 @@
         border-radius: 0.5rem;
         font-size: $font-size-base;
         font-weight: 500;
+        color: var(--text-main);
 
         .new-chat-img {
             @include size(1.2em);
+            filter: var(--icon-filter);
         }
 
         &:hover {
-            background-color: rgba(92, 90, 90, 0.245);
+            background-color: var(--hover-bg);
         }
     }
 
@@ -119,10 +124,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: var(--text-main);
 
         &:hover {
-            background-color: $color-dark-card;
-            color: $text-main;
+            background-color: var(--bg-card);
+            color: var(--text-main);
         }
     }
 
@@ -131,12 +137,12 @@
             height: 1.5em;
             width: 1.5em;
             transform: rotate(-60deg);
-            filter: brightness(0) invert(1);
+            filter: var(--icon-filter);
             opacity: 1;
         }
 
         &-i {
-            color: $color-light;
+            color: var(--text-main);
         }
     }
 
@@ -151,7 +157,7 @@
         .sidebar__heading-btn {
             @include flex-container(row, flex-start, center, nowrap, 0.25rem);
             background: transparent;
-            color: $text-muted;
+            color: var(--text-muted);
 
             .sidebar__heading {
                 padding: 0;
@@ -159,7 +165,7 @@
 
             .sidebar__heading-chevron {
                 @include size(0.875rem);
-                filter: brightness(0) invert(1);
+                filter: var(--icon-filter);
                 transition: transform 0.2s ease;
             }
         }
@@ -179,7 +185,7 @@
 
     &__heading {
         font-size: 0.75rem;
-        color: $text-muted;
+        color: var(--text-muted);
         padding: 0.5rem 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.0313rem;
@@ -196,10 +202,11 @@
         font-size: $font-size-base;
         font-weight: 500;
         cursor: pointer;
+        color: var(--text-main);
 
         &:hover {
-            background-color: $color-dark-card;
-            color: $text-main;
+            background-color: var(--hover-bg);
+            color: var(--text-main);
 
             .sidebar__chat-actions {
                 opacity: 1;
@@ -207,8 +214,8 @@
         }
 
         &.active {
-            background-color: $color-dark-card;
-            color: $text-main;
+            background-color: var(--hover-bg);
+            color: var(--text-main);
 
             .sidebar__chat-actions {
                 opacity: 1;
@@ -236,18 +243,18 @@
 
         img {
             @include size(1rem);
-            filter: brightness(0) invert(1);
+            filter: var(--icon-filter);
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--bg-card);
         }
     }
 
     &__more-btn {
         padding: 0.5rem 0.75rem;
         font-size: $font-size-sm;
-        color: $text-muted;
+        color: var(--text-muted);
         width: 100%;
         text-align: left;
     }
@@ -256,17 +263,22 @@
         position: sticky;
         bottom: 0;
         z-index: 10;
-        background-color: $color-dark;
+        background-color: var(--bg-secondary);
         padding: 0.75rem;
-        border-top: 0.0625rem solid $color-dark-border;
+        border-top: 0.0625rem solid var(--border-color);
         margin-top: auto;
         @include flex-container(column, flex-start, stretch, nowrap, 0.5rem);
     }
 
     &__offer-btn {
-        @include button($color-dark-card, $text-main, 0.5rem 0.75rem, 1.25rem);
+        @include button(var(--bg-card), var(--text-main), 0.5rem 0.75rem, 1.25rem);
         @include flex-container(row, center, center, nowrap, 0.5rem);
         font-size: $font-size-sm;
+        border: 1px solid var(--border-color);
+
+        img {
+            filter: var(--icon-filter);
+        }
     }
 
     &.collapsed {
@@ -279,6 +291,10 @@
         .sidebar__offer-btn,
         .user-profile__info {
             display: none;
+        }
+
+        .img-invert-color {
+            filter: var(--icon-invert-filter);
         }
 
 
@@ -327,6 +343,7 @@
 
         .search-btn {
             display: flex;
+            // filter: var(--icon-filter)
         }
 
         .recent-btn {
@@ -354,7 +371,7 @@
 }
 
 .img-color {
-    filter: brightness(0) invert(1);
+    filter: var(--icon-filter);
 }
 
 .user-profile {
@@ -365,7 +382,7 @@
         @include size(2rem);
         @include center();
         background-color: $color-accent-dark;
-        color: $color-accent;
+        color: #ffffff;
         border-radius: 50%;
         font-size: 0.75rem;
         font-weight: 600;
@@ -378,11 +395,12 @@
     &__name {
         font-size: $font-size-sm;
         font-weight: 500;
+        color: var(--text-main);
     }
 
     &__plan {
         font-size: 0.75rem;
-        color: $text-muted;
+        color: var(--text-muted);
     }
 }
 
@@ -402,28 +420,42 @@
     }
 }
 
-
 .sidebar__login-btn {
     @include flex-container(row, center, center, nowrap, 0.75rem);
     width: 100%;
     padding: 0.625rem 0.75rem;
     border-radius: 0.5rem;
     background: transparent;
-    border: 0.0625rem solid $border-color;
-    color: $text-main;
+    border: 0.0625rem solid var(--border-color);
+    color: var(--text-main);
     font-size: $font-size-base;
     cursor: pointer;
     transition: background-color 0.15s ease;
 
     img {
         @include size(1.125em);
+        filter: var(--icon-filter);
     }
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: var(--hover-bg);
     }
 }
 
 .sidebar__new-chat.is-active {
-    background-color: rgba(92, 90, 90, 0.245);
+    background-color: var(--hover-bg);
+}
+
+.sidebar__category-label {
+    padding: 12px 16px 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+.sidebar__category-label:first-child {
+    padding-top: 6px;
 }

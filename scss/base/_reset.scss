@@ -7,7 +7,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    scrollbar-color: $color-text-muted-light transparent;
+    scrollbar-color: var(--text-muted) transparent;
     scrollbar-width: thin;
 }
 
@@ -17,8 +17,8 @@ html {
 
 body {
     font-family: $font-family;
-    background-color: $bg-primary;
-    color: $text-main;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
     min-height: 100vh;
     overflow: hidden;
 }

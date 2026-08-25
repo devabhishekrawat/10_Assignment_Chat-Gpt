@@ -30,14 +30,6 @@ if (chatInput) {
     });
 }
 
-function initTheme() {
-    const savedTheme = localStorage.getItem("appTheme");
-    if (savedTheme === "light") {
-        document.body.classList.add("light-theme");
-    } else {
-        document.body.classList.remove("light-theme");
-    }
-}
 
 function setActiveChat(chatId) {
     document.querySelectorAll(".sidebar__chat-item").forEach((item) => {
@@ -87,7 +79,7 @@ function initApp() {
             return;
         }
     }
-        setActiveChat("new");
+    setActiveChat("new");
 }
 
 if (document.readyState === "loading") {
@@ -128,10 +120,9 @@ function renderResults(filteredConversations) {
 
         resultItem.innerHTML = `
             <div class="search-modal__item-title">${conv.title}</div>
-            ${
-                lastUserMessage
-                    ? `<div class="search-modal__item-preview">${lastUserMessage}</div>`
-                    : ""
+            ${lastUserMessage
+                ? `<div class="search-modal__item-preview">${lastUserMessage}</div>`
+                : ""
             }
         `;
 
@@ -197,3 +188,19 @@ document.addEventListener("keydown", (e) => {
         closeModal();
     }
 });
+
+
+function applyTheme(theme) {
+    if (theme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+        document.body.classList.add("light-theme");
+    } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.body.classList.remove("light-theme");
+    }
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem("appTheme") || "dark";
+    applyTheme(savedTheme);
+}

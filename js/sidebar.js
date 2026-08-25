@@ -1,13 +1,33 @@
 import state from "./data.js";
-import { loadConversationsFromStorage } from "./chat.js";
 import { renderConversation } from "./chat.js";
 
+function getChatCategory(createdAt) {
+    const chatDate = new Date(createdAt);
+    chatDate.setHours(0, 0, 0, 0);
+
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const yesterdayStart = new Date(todayStart);
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+
+    const sevenDaysAgo = new Date(todayStart);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    if (chatDate >= todayStart) return "Today";
+    if (chatDate >= yesterdayStart) return "Yesterday";
+    if (chatDate >= sevenDaysAgo) return "Previous 7 Days";
+    return "Older";
+}
+
+const CATEGORY_ORDER = ["Today", "Yesterday", "Previous 7 Days", "Older"];
+
 export function initSidebarControls(onSelectChat) {
-    const sidebar = document.querySelector(".sidebar");
-    const toggleBtn = document.querySelector(".toggle-btn");
+    const sidebar    = document.querySelector(".sidebar");
+    const toggleBtn  = document.querySelector(".toggle-btn");
     const newChatBtn = document.querySelector(".sidebar__new-chat");
     const headingBtn = document.querySelector(".sidebar__heading-btn");
-    const chatList = document.getElementById("chats-list-container");
+    const chatList   = document.getElementById("chats-list-container");
 
     if (headingBtn && chatList) {
         headingBtn.addEventListener("click", () => {
@@ -31,63 +51,72 @@ export function initSidebarControls(onSelectChat) {
 }
 
 export function renderChatList(conversationsArray, onSelectChat) {
-    console.log("this")
     const chatListContainer = document.getElementById("chats-list-container");
     if (!chatListContainer) return;
 
     chatListContainer.innerHTML = "";
 
     const userDataStr = sessionStorage.getItem("user");
-    const user = userDataStr ? JSON.parse(userDataStr) : null;
-    const isLoggedIn = user && user.isLoggedIn;
-
+    const user        = userDataStr ? JSON.parse(userDataStr) : null;
+    const isLoggedIn  = user && user.isLoggedIn;
     if (!isLoggedIn) return;
 
-    console.log(conversationsArray, "array")
-    console.log(state.conversations, "con")
     const listToRender = conversationsArray || state.conversations;
 
-    listToRender.forEach((chat) => {
-        const itemDiv = document.createElement("div");
-        itemDiv.classList.add("sidebar__chat-item");
+    const sorted = [...listToRender].sort((a, b) => {
+        return new Date(b.updatedAt ?? b.createdAt) - new Date(a.updatedAt ?? a.createdAt);
+    });
 
-        // Highlight active chat
-        if (chat.id === state.currentChatId) {
-            itemDiv.classList.add("is-active");
-        }
+    const groups = {};
+    sorted.forEach((chat) => {
+        const category = getChatCategory(chat.updatedAt ?? chat.createdAt);
+        if (!groups[category]) groups[category] = [];
+        groups[category].push(chat);
+    });
 
-        itemDiv.dataset.id = chat.id;
+    CATEGORY_ORDER.forEach((category) => {
+        const chats = groups[category];
+        if (!chats || chats.length === 0) return;
 
-        const titleSpan = document.createElement("span");
-        titleSpan.classList.add("sidebar__chat-title");
-        titleSpan.textContent = chat.title || `Chat ${chat.id}`;
+        const label = document.createElement("div");
+        label.classList.add("sidebar__category-label");
+        label.textContent = category;
+        chatListContainer.appendChild(label);
 
-        itemDiv.appendChild(titleSpan);
+        chats.forEach((chat) => {
+            const itemDiv = document.createElement("div");
+            itemDiv.classList.add("sidebar__chat-item");
 
-        itemDiv.addEventListener("click", () => {
-            onSelectChat(chat.id);
+            if (chat.id === state.currentChatId) {
+                itemDiv.classList.add("is-active");
+            }
+
+            itemDiv.dataset.id = chat.id;
+
+            const titleSpan = document.createElement("span");
+            titleSpan.classList.add("sidebar__chat-title");
+            titleSpan.textContent = chat.title || `Chat ${chat.id}`;
+
+            itemDiv.appendChild(titleSpan);
+
+            itemDiv.addEventListener("click", () => {
+                onSelectChat(chat.id);
+            });
+
+            chatListContainer.appendChild(itemDiv);
         });
-
-        chatListContainer.appendChild(itemDiv);
     });
 }
 
 export function handleChatSelection(chatId) {
-    console.log("this")
     state.currentChatId = chatId;
     localStorage.setItem("activeChatId", chatId);
 
-
-    // 2. Fetch directly from updated state array
     const conversation = state.conversations.find((c) => c.id === chatId);
-    console.log(conversation)
-    // 3. Render matching conversation
     if (conversation) {
         renderConversation(conversation);
     }
 }
-
-
 
 function autoCloseSidebarOnMobile() {
     const sidebar = document.querySelector(".sidebar");
@@ -97,7 +126,4 @@ function autoCloseSidebarOnMobile() {
 }
 
 autoCloseSidebarOnMobile();
-
-window.addEventListener("resize", () => {
-    autoCloseSidebarOnMobile();
-});
+window.addEventListener("resize", autoCloseSidebarOnMobile);

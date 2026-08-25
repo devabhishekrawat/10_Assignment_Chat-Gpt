@@ -88,13 +88,13 @@ export function renderUserProfile(onAuthChange) {
                 <div class="profile-popover is-hidden" id="profile-popover">
                     <div class="profile-popover__menu">
                         <button type="button" class="profile-popover__item" data-action="general">
-                            <img class="img-color" src="./assets/settings.svg" alt="General">
+                            <img class="img-invert-color"  src="./assets/settings.svg" alt="General">
                             <span>General</span>
                         </button>
                         <div class="profile-popover__submenu-wrapper">
                             <button type="button" class="profile-popover__item profile-popover__item--has-arrow">
                                 <div class="profile-popover__item-left">
-                                    <img class="img-color" src="./assets/sun-moon.svg" alt="Appearance">
+                                    <img class="img-invert-color"   src="./assets/sun-moon.svg" alt="Appearance">
                                     <span>Appearance</span>
                                 </div>
                                 <i class="fa-solid fa-chevron-right profile-popover__arrow"></i>
@@ -111,11 +111,11 @@ export function renderUserProfile(onAuthChange) {
                             </div>
                         </div>
                         <button type="button" class="profile-popover__item" data-action="profile">
-                            <img class="img-color" src="./assets/user.svg" alt="Profile">
+                            <img class="img-invert-color"  src="./assets/user.svg" alt="Profile">
                             <span>Profile</span>
                         </button>
                         <button type="button" class="profile-popover__item" data-action="notifications">
-                            <img class="img-color" src="./assets/bell.svg" alt="Notifications">
+                            <img class="img-invert-color"  src="./assets/bell.svg" alt="Notifications">
                             <span>Notifications</span>
                         </button>
                     </div>
@@ -124,11 +124,11 @@ export function renderUserProfile(onAuthChange) {
 
                     <div class="profile-popover__menu">
                         <button type="button" class="profile-popover__item" data-action="shortcuts">
-                            <img class="img-color" src="./assets/keyboard.svg" alt="Keyboard shortcuts">
+                            <img class="img-invert-color"  src="./assets/keyboard.svg" alt="Keyboard shortcuts">
                             <span>Keyboard shortcuts</span>
                         </button>
                         <button type="button" class="profile-popover__item" id="logout-btn">
-                            <img class="img-color" src="./assets/log-out.svg" alt="Log out">
+                            <img class="img-invert-color"  src="./assets/log-out.svg" alt="Log out">
                             <span>Log out</span>
                         </button>
                     </div>
@@ -136,7 +136,7 @@ export function renderUserProfile(onAuthChange) {
             </div>
 
             <button class="sidebar__offer-btn">
-                <img class="img-color" src="./assets/gift.svg" alt="Claim Offer">
+                <img  src="./assets/gift.svg" alt="Claim Offer">
                 <span>Claim offer</span>
             </button>
         `;

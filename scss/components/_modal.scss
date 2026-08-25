@@ -7,7 +7,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: var(--overlay-bg, rgba(0, 0, 0, 0.5));
     backdrop-filter: blur(4px);
     @include flex-container(row, center, center, nowrap, 0);
     z-index: 100;
@@ -24,13 +24,13 @@
 
 .modal {
     position: relative;
-    background-color: $bg-card;
-    border: 0.0625rem solid $border-color;
+    background-color: var(--bg-card);
+    border: 0.0625rem solid var(--border-color);
     border-radius: 1rem;
     padding: 2rem;
     width: 100%;
     max-width: 26rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
 
     &__close-btn {
         position: absolute;
@@ -44,7 +44,7 @@
 
         &-img {
             @include size(1.25rem);
-            filter: brightness(0) invert(1);
+            filter: var(--icon-filter);
             opacity: 0.7;
         }
 
@@ -56,13 +56,13 @@
     &__title {
         font-size: 1.375rem;
         font-weight: 600;
-        color: $text-main;
+        color: var(--text-main);
         margin-bottom: 0.375rem;
     }
 
     &__subtitle {
         font-size: $font-size-sm;
-        color: $text-muted;
+        color: var(--text-muted);
         margin-bottom: 1.5rem;
     }
 }
@@ -75,21 +75,21 @@
         label {
             display: block;
             font-size: $font-size-sm;
-            color: $text-main;
+            color: var(--text-main);
             margin-bottom: 0.375rem;
         }
 
         .form-control {
             width: 100%;
             padding: 0.625rem 0.875rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 0.0625rem solid $border-color;
+            background-color: var(--hover-bg);
+            border: 0.0625rem solid var(--border-color);
             border-radius: 0.5rem;
-            color: $text-main;
+            color: var(--text-main);
             outline: none;
 
             &:focus {
-                border-color: rgba(255, 255, 255, 0.4);
+                border-color: var(--text-muted);
             }
         }
     }
@@ -107,8 +107,8 @@
     .btn-submit {
         width: 100%;
         padding: 0.625rem;
-        background-color: $text-main;
-        color: $bg-primary;
+        background-color: var(--text-main);
+        color: var(--bg-primary);
         border: none;
         border-radius: 0.5rem;
         font-weight: 600;
@@ -120,7 +120,6 @@
         }
     }
 }
-
 
 .user-profile-wrapper {
     position: relative;
@@ -135,7 +134,7 @@
     transition: background-color 0.15s ease;
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: var(--hover-bg);
     }
 
     &__avatar {
@@ -155,7 +154,7 @@
     }
 
     &__name {
-        color: $text-main;
+        color: var(--text-main);
         font-size: $font-size-sm;
         font-weight: 500;
         white-space: nowrap;
@@ -164,7 +163,7 @@
     }
 
     &__plan {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 0.75rem;
     }
 }
@@ -174,11 +173,11 @@
     bottom: calc(100% + 0.5rem);
     left: 0;
     width: 16rem;
-    background-color: $bg-card;
-    border: 0.0625rem solid $border-color;
+    background-color: var(--bg-card);
+    border: 0.0625rem solid var(--border-color);
     border-radius: 1rem;
     padding: 0.75rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
     z-index: 1;
 
     &.is-hidden {
@@ -194,7 +193,7 @@
         cursor: pointer;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--hover-bg);
         }
     }
 
@@ -215,24 +214,24 @@
     }
 
     &__name {
-        color: $text-main;
+        color: var(--text-main);
         font-size: $font-size-sm;
         font-weight: 500;
     }
 
     &__plan {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 0.75rem;
     }
 
     &__arrow {
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: 0.75rem;
     }
 
     &__divider {
         height: 0.0625rem;
-        background-color: $border-color;
+        background-color: var(--border-color);
         margin: 0.5rem 0;
     }
 
@@ -246,7 +245,7 @@
         padding: 0.5rem 0.625rem;
         border: none;
         background: transparent;
-        color: $text-main;
+        color: var(--text-main);
         font-size: $font-size-sm;
         border-radius: 0.5rem;
         cursor: pointer;
@@ -255,12 +254,12 @@
         i {
             width: 1.25rem;
             text-align: center;
-            color: $text-main;
+            color: var(--text-main);
             font-size: 0.9375rem;
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: var(--hover-bg);
         }
 
         &--has-arrow {
@@ -272,7 +271,6 @@
         }
     }
 }
-
 
 .profile-popover__submenu-wrapper {
     position: relative;
@@ -289,11 +287,11 @@
     left: calc(100% + 0.5rem);
     top: 0;
     width: 11rem;
-    background-color: $bg-card;
-    border: 0.0625rem solid $border-color;
+    background-color: var(--bg-card);
+    border: 0.0625rem solid var(--border-color);
     border-radius: 0.75rem;
     padding: 0.5rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
     opacity: 0;
     visibility: hidden;
     transform: translateX(-0.5rem);
@@ -306,7 +304,7 @@
     padding: 0.5rem 0.625rem;
     background: transparent;
     border: none;
-    color: $text-main;
+    color: var(--text-main);
     font-size: $font-size-sm;
     border-radius: 0.375rem;
     cursor: pointer;
@@ -316,11 +314,11 @@
     }
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: var(--hover-bg);
     }
 
     &.is-active {
-        background-color: rgba(255, 255, 255, 0.12);
+        background-color: var(--hover-bg);
         font-weight: 600;
 
         i {
@@ -336,19 +334,19 @@
 .modal__setting-row {
     @include flex-container(row, space-between, center, nowrap, 1rem);
     padding: 0.75rem 0;
-    border-bottom: 0.0625rem solid $border-color;
+    border-bottom: 0.0625rem solid var(--border-color);
 
     .setting-title {
         display: block;
         font-size: $font-size-sm;
         font-weight: 500;
-        color: $text-main;
+        color: var(--text-main);
     }
 
     .setting-desc {
         display: block;
         font-size: 0.75rem;
-        color: $text-muted;
+        color: var(--text-muted);
     }
 }
 
@@ -374,42 +372,41 @@
     .shortcut-item {
         @include flex-container(row, space-between, center, nowrap, 0);
         font-size: $font-size-sm;
-        color: $text-main;
+        color: var(--text-main);
 
         kbd {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 0.0625rem solid $border-color;
+            background-color: var(--hover-bg);
+            border: 0.0625rem solid var(--border-color);
             border-radius: 0.25rem;
             padding: 0.2rem 0.5rem;
             font-size: 0.75rem;
-            color: $text-main;
+            color: var(--text-main);
         }
     }
 }
 
 .btn-secondary-sm {
-    background-color: rgba(255, 255, 255, 0.08);
-    border: 0.0625rem solid $border-color;
-    color: $text-main;
+    background-color: var(--hover-bg);
+    border: 0.0625rem solid var(--border-color);
+    color: var(--text-main);
     padding: 0.375rem 0.75rem;
     border-radius: 0.375rem;
     font-size: 0.75rem;
     cursor: pointer;
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: var(--bg-card);
     }
 }
 
 .form-control-sm {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 0.0625rem solid $border-color;
-    color: $text-main;
+    background-color: var(--hover-bg);
+    border: 0.0625rem solid var(--border-color);
+    color: var(--text-main);
     padding: 0.25rem 0.5rem;
     border-radius: 0.375rem;
     outline: none;
 }
-
 
 .search-modal {
     position: fixed;
@@ -432,7 +429,7 @@
     &__overlay {
         position: absolute;
         inset: 0;
-        background-color: rgba(0, 0, 0, 0.65);
+        background-color: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(4px);
     }
 
@@ -440,12 +437,12 @@
         position: relative;
         z-index: 1;
         width: 100%;
-        max-width: 36rem; // Centered overlay size (~576px)
+        max-width: 36rem;
         margin: 0 1rem;
-        background-color: $bg-card;
-        border: 0.0625rem solid $border-color;
+        background-color: var(--bg-card);
+        border: 0.0625rem solid var(--border-color);
         border-radius: 1rem;
-        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
         overflow: hidden;
         transform: translateY(-0.75rem) scale(0.98);
         transition: transform 0.2s ease;
@@ -454,7 +451,7 @@
     &__header {
         @include flex-container(row, space-between, center, nowrap, 0.75rem);
         padding: 0.875rem 1rem;
-        border-bottom: 0.0625rem solid $border-color;
+        border-bottom: 0.0625rem solid var(--border-color);
     }
 
     &__input-wrapper {
@@ -464,6 +461,7 @@
 
     &__icon {
         @include size(1.125em);
+        filter: var(--icon-filter);
         opacity: 0.6;
     }
 
@@ -472,12 +470,12 @@
         background: transparent;
         border: none;
         outline: none;
-        color: $text-main;
+        color: var(--text-main);
         font-size: $font-size-base;
         font-family: inherit;
 
         &::placeholder {
-            color: $text-muted;
+            color: var(--text-muted);
         }
     }
 
@@ -492,10 +490,11 @@
 
         &--img {
             @include size(1em);
+            filter: var(--icon-filter);
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: var(--hover-bg);
         }
     }
 
@@ -505,14 +504,14 @@
         padding: 0.5rem;
 
         scrollbar-width: thin;
-        scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        scrollbar-color: var(--text-muted) transparent;
 
         &::-webkit-scrollbar {
             width: 0.375rem;
         }
 
         &::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--text-muted);
             border-radius: 999px;
         }
     }
@@ -521,25 +520,25 @@
         @include flex-container(column, flex-start, stretch, nowrap, 0.25rem);
         padding: 0.75rem 0.875rem;
         border-radius: 0.625rem;
-        color: $text-main;
+        color: var(--text-main);
         text-decoration: none;
         cursor: pointer;
         transition: background-color 0.15s ease;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.06);
+            background-color: var(--hover-bg);
         }
     }
 
     &__item-title {
         font-size: $font-size-base;
         font-weight: 500;
-        color: $text-main;
+        color: var(--text-main);
     }
 
     &__item-preview {
         font-size: $font-size-sm;
-        color: $text-muted;
+        color: var(--text-muted);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -548,7 +547,7 @@
     &__empty {
         padding: 2.5rem 1rem;
         text-align: center;
-        color: $text-muted;
+        color: var(--text-muted);
         font-size: $font-size-base;
     }
 }

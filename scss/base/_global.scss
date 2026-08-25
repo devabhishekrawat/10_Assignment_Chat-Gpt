@@ -1,41 +1,62 @@
 @use "../abstract/variables.scss" as *;
 @use "../abstract/mixins.scss" as *;
 
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+}
+
 .app {
     @include flex-container(row, flex-start, stretch);
     @include size(100vw, 100vh);
 }
 
-html[data-theme="light"] {
-    body {
-        background-color: $color-light;
-        color: $color-text-main-light;
+.sidebar {
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    color: var(--text-main);
+
+    &__item:hover,
+    &__list-item:hover {
+        background-color: var(--bg-card);
     }
 
-    .sidebar {
-        background-color: $color-light-surface;
-        border-right-color: $color-light-border;
-        color: $color-text-main-light;
-
-        &__item:hover,
-        &__list-item:hover {
-            background-color: $color-light-card;
-        }
-
-        &__new-chat {
-            border-color: $color-light-border;
-        }
+    &__new-chat {
+        border-color: var(--border-color);
+        background-color: var(--bg-primary);
+        color: var(--text-main);
     }
+}
 
-    .msg-input__field {
-        background-color: $color-light-card;
-        border-color: $color-light-border;
-    }
+.msg-input__field {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
 
-    .chip {
-        border-color: $color-light-border;
-        &:hover {
-            background-color: $color-light-card;
-        }
+.msg-input__control {
+    color: var(--text-main);
+
+    &::placeholder {
+        color: var(--text-muted);
     }
+}
+
+.chip {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-main);
+
+    &:hover {
+        background-color: var(--bg-card);
+    }
+}
+
+:root,
+[data-theme="light"] {
+    --icon-filter: none;
+}
+
+[data-theme="dark"] {
+    --icon-filter: brightness(0) invert(1);
 }

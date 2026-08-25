@@ -1,4 +1,3 @@
-// Brand Colors
 $color-dark: #0d0d0d;
 $color-dark-surface: #171717;
 $color-dark-card: #212121;
@@ -12,24 +11,51 @@ $color-light-border: #e5e5e5;
 $color-text-main-dark: #ececec;
 $color-text-muted-dark: #b4b4b4;
 $color-text-main-light: #0d0d0d;
-$color-text-muted-light: #afafaf;
+$color-text-muted-light: #676767;
 
 $color-accent: #10a37f;
 $color-blue: #21005d;
-$free-offer: #63A8f8;
+$free-offer: #63a8f8;
 $color-grey: #9ca3af;
-$color-red : #ef4444;
-$color-accent-dark : #00875a;
-
-$bg-primary: $color-dark;
-$bg-secondary: $color-dark-surface;
-$bg-card: $color-dark-card;
-$border-color: $color-dark-border;
-$text-main: $color-text-main-dark;
-$text-muted: $color-text-muted-dark;
+$color-red: #ef4444;
+$color-accent-dark: #00875a;
 
 $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 $font-size-sm: 0.825rem;
 $font-size-base: 0.9375rem;
 $font-size-lg: 1.125rem;
 $font-size-title: 2rem;
+
+:root,
+html[data-theme="dark"] {
+    --bg-primary: #{$color-dark};
+    --bg-secondary: #{$color-dark-surface};
+    --bg-card: #{$color-dark-card};
+    --border-color: #{$color-dark-border};
+    --text-main: #{$color-text-main-dark};
+    --text-muted: #{$color-text-muted-dark};
+    --icon-filter: invert(1);
+    --icon--invert-filter: invert(0);
+    --input-bg: #{$color-dark-card};
+    --hover-bg: #2f2f2f;
+}
+
+html[data-theme="light"] {
+    --bg-primary: #{$color-light};
+    --bg-secondary: #{$color-light-surface};
+    --bg-card: #{$color-light-card};
+    --border-color: #{$color-light-border};
+    --text-main: #{$color-text-main-light};
+    --text-muted: #{$color-text-muted-light};
+    --icon-filter: invert(0);
+    --icon-invert-filter: invert(1);
+    --input-bg: #f4f4f4;
+    --hover-bg: #ececec;
+}
+
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-card: var(--bg-card);
+$border-color: var(--border-color);
+$text-main: var(--text-main);
+$text-muted: var(--text-muted);
